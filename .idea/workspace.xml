@@ -1,26 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b01b814c-d3ab-466c-adef-2f8e6cd801e8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/img/11.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/img/12.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/img/13.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/img/14.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/img/15.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/img/16.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/img/video.mp4" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/tpls/charts.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/tpls/html.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/tpls/introduce.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/tpls/killgame.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/tpls/operate.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/tpls/topbar.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/tpls/video.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/angular.css" afterPath="$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/angular.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/js/app.js" afterPath="$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/js/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/tpls/home.html" afterPath="$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/tpls/home.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="b01b814c-d3ab-466c-adef-2f8e6cd801e8" name="Default" comment="" />
     <ignored path="graduate.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -62,11 +43,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="app.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/js/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1584">
-              <caret line="54" column="17" selection-start-line="54" selection-start-column="17" selection-end-line="54" selection-end-column="17" />
+            <state vertical-scroll-proportion="-1.2704626" vertical-offset="758" max-vertical-offset="1584">
+              <caret line="2" column="13" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="client.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/js/client.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6116">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -104,10 +95,11 @@
         <entry file="file://$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/tpls/video.html">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-2.8387096" vertical-offset="0" max-vertical-offset="220">
-              <caret line="4" column="56" selection-start-line="4" selection-start-column="56" selection-end-line="4" selection-end-column="56" />
+              <caret line="4" column="85" selection-start-line="4" selection-start-column="85" selection-end-line="4" selection-end-column="85" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -127,11 +119,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="home.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/tpls/home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.188065" vertical-offset="66" max-vertical-offset="1826">
-              <caret line="58" column="44" selection-start-line="58" selection-start-column="44" selection-end-line="58" selection-end-column="44" />
+            <state vertical-scroll-proportion="-5.774194" vertical-offset="679" max-vertical-offset="1826">
+              <caret line="39" column="6" selection-start-line="39" selection-start-column="6" selection-end-line="39" selection-end-column="6" />
               <folding>
                 <element signature="n#style#0;n#h3#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#h3#0;n#div#3;n#!!top" expanded="true" />
@@ -301,6 +293,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="tpls" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="graduate" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="graduate" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chatofpomelo-websocket" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web-server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -521,26 +539,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/js/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1584">
-          <caret line="54" column="17" selection-start-line="54" selection-start-column="17" selection-end-line="54" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/tpls/operate.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.8387096" vertical-offset="0" max-vertical-offset="220">
-          <caret line="4" column="77" selection-start-line="4" selection-start-column="77" selection-end-line="4" selection-end-column="77" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/tpls/charts.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-2.8387096" vertical-offset="0" max-vertical-offset="220">
@@ -549,17 +547,6 @@
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/tpls/video.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.8387096" vertical-offset="0" max-vertical-offset="220">
-          <caret line="4" column="56" selection-start-line="4" selection-start-column="56" selection-end-line="4" selection-end-column="56" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -578,8 +565,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/tpls/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.188065" vertical-offset="66" max-vertical-offset="1826">
-          <caret line="58" column="44" selection-start-line="58" selection-start-column="44" selection-end-line="58" selection-end-column="44" />
+        <state vertical-scroll-proportion="-5.774194" vertical-offset="679" max-vertical-offset="1826">
+          <caret line="39" column="6" selection-start-line="39" selection-start-column="6" selection-end-line="39" selection-end-column="6" />
           <folding>
             <element signature="n#style#0;n#h3#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#h3#0;n#div#3;n#!!top" expanded="true" />
@@ -587,6 +574,46 @@
             <element signature="n#style#0;n#h3#0;n#div#4;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#5;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/js/client.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6116">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/tpls/video.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.8387096" vertical-offset="0" max-vertical-offset="220">
+          <caret line="4" column="85" selection-start-line="4" selection-start-column="85" selection-end-line="4" selection-end-column="85" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/tpls/operate.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.8387096" vertical-offset="0" max-vertical-offset="220">
+          <caret line="4" column="77" selection-start-line="4" selection-start-column="77" selection-end-line="4" selection-end-column="77" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chatofpomelo-websocket/web-server/public/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.2704626" vertical-offset="758" max-vertical-offset="1584">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
