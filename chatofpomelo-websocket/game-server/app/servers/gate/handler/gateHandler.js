@@ -19,6 +19,7 @@ var handler = Handler.prototype;
  *
  */
 handler.queryEntry = function(msg, session, next) {
+    console.log("enter gate"+msg.name+msg.pass)
 	var uid = msg.uid;
 	if(!uid) {
 		next(null, {

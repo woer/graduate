@@ -1,8 +1,13 @@
 var routerApp = angular.module('routerApp', ['ui.router','MyController']);
-
+var pomelo;
 routerApp.run(function($rootScope, $state, $stateParams) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
+    pomelo=$rootScope.pomelo= window.pomelo;
+
+
+
+
 
 });
 
@@ -62,5 +67,11 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                     templateUrl: 'tpls/video.html'
                 }
             }
+        })
+        .state('register', {
+            url: '/register',
+            templateUrl: 'tpls/register.html'
+
+
         })
 });
