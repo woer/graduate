@@ -1,13 +1,13 @@
 body {
     padding: 0;
     margin: 0;
-
+    /*background-color: #000;*/
 }
 .main{
     color: #ffffff;
     margin: 0 auto;
     width: 65.5%;
-
+    /*background-color: #000;*/
 }
 .mybar{
 
@@ -81,7 +81,14 @@ margin-top: 10px;
     height: 500px;
     border: solid 1px;
 }
-
+.inner_room{
+   border:  solid 1px red;
+    width: 80%;
+    height: 550px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    margin-top: 30px;
+}
 
 
 

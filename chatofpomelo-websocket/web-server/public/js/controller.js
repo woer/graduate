@@ -1,6 +1,4 @@
 
-
-
 var myController = angular.module("MyController", []);
 myController.controller("imageController",function($scope){
 var images=["img/2.jpg","img/3.gif","img/4.jpg"]
@@ -15,14 +13,36 @@ setInterval(function(){
 },2000)
 
 })
-myController.controller('registerCtrl',function($scope,$location){
+myController.controller('registerCtrl',function($rootScope,$scope,$location){
+    var pomelo=$rootScope.pomelo;
     $scope.register=function() {
        $location.path('/register')
     }
+   $scope.login_Sub=function(){
+       var route = 'gate.gateHandler.loginValidate';
+       pomelo.init({
+           host: '127.0.0.1',
+           port: 3014,
+           log: true
+       }, function (data) {
+          pomelo.request(route, {
+               name: $scope.login_name,
+               pass:$scope.login_pass
+           }, function (data) {
+              if(data.login) {
+
+                  $rootScope.name=data.name;
+                  $rootScope.header=data.header;
+                  $location.path('/changeRoom');
+                  $rootScope.$apply();
+              }else{
+                  alert("用户名密码不正确")
+              }
+           })
 
 })
-
-
+}
+})
 myController.controller('reg_submitCtrl',function($rootScope,$scope,$location){
     var pomelo=$rootScope.pomelo;
     $scope.reg_submit=function() {
@@ -39,8 +59,8 @@ pomelo.init({
         pass:$scope.reg_pass,
         email:$scope.reg_email
     }, function (data) {
-//        pomelo.disconnect();
-        alert(data.code)
+       pomelo.disconnect();
+
        $location.path('/index');
         $rootScope.$apply();
     })
@@ -49,7 +69,11 @@ pomelo.init({
 
 })
 
+myController.controller('roomListCtrl',['$rootScope','$scope','$location','roomListService',function($rootScope,$scope,$location,roomListService){
 
+ $scope.roomlist=roomListService.roomlist;
+console.log($scope.roomlist)
+}])
 
 
 
