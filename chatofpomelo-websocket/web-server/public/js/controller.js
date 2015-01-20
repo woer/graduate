@@ -13,8 +13,9 @@ setInterval(function(){
 },2000)
 
 })
-myController.controller('registerCtrl',function($rootScope,$scope,$location){
+myController.controller('registerCtrl',['$rootScope','$scope','$location','roomListService',function($rootScope,$scope,$location,roomListService){
     var pomelo=$rootScope.pomelo;
+
     $scope.register=function() {
        $location.path('/register')
     }
@@ -25,25 +26,42 @@ myController.controller('registerCtrl',function($rootScope,$scope,$location){
            port: 3014,
            log: true
        }, function (data) {
+           var username=$scope.login_name;
           pomelo.request(route, {
                name: $scope.login_name,
                pass:$scope.login_pass
            }, function (data) {
-              pomelo.disconnect();
+           pomelo.disconnect();
               if(data.login) {
+                  pomelo.init({
+                      host: '127.0.0.1',
+                      port: 3051,
+                      log: true
+                  }, function (data) {
+                      $rootScope.header='img/17.jpg';
+                      $rootScope.name=username;
+                  var route = "connector.entryHandler.getRoomList";
+                  pomelo.request(route, {rid:"rid",username:"username"}, function (data) {
 
-                  $rootScope.name=data.name;
-                  $rootScope.header=data.header;
-                  $location.path('/changeRoom');
-                  $rootScope.$apply();
-              }else{
+                     roomListService.roomlist=data.roomList;
+                      roomListService.username=username;
+                      $location.path('/changeRoom');
+                      $rootScope.$apply();
+                      pomelo.disconnect();
+
+
+                  })
+
+
+                  })
+           }else{
                   alert("用户名密码不正确")
               }
            })
 
 })
 }
-})
+}])
 myController.controller('reg_submitCtrl',function($rootScope,$scope,$location){
     var pomelo=$rootScope.pomelo;
     $scope.reg_submit=function() {
@@ -71,13 +89,33 @@ pomelo.init({
 })
 
 myController.controller('roomListCtrl',['$rootScope','$scope','$location','roomListService',function($rootScope,$scope,$location,roomListService){
-
+    var pomelo=$rootScope.pomelo;
+    $scope.name=$rootScope.name;
+    $scope.header=$rootScope.header;
  $scope.roomlist=roomListService.roomlist;
     $scope.$on('change', function( event ) {
-        alert("change roomlist")
         $scope.roomlist = roomListService.roomlist;
         $scope.$apply();
     });
+pomelo.on("onAdd",function(data){
+    alert(data.rid+"data.myRoomList"+data.username)
+var id=data.rid;
+    var username=data.username;
+        if(!$scope.roomlist[id].roomowner){
+            $scope.roomlist[id].roomowner=data.username;
+        }
+    for(var i=0;i<$scope.roomlist[id].user.length;i++){
+        if($scope.roomlist[id].user[i]==username){
+            return;
+        }
+
+    }
+    roomListService.roomlist=$scope.roomlist[id].user.push(username)
+        $scope.$apply();
+})
+
+
+
 
 }])
 

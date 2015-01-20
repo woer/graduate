@@ -191,6 +191,7 @@ $(document).ready(function() {
 
 	//update user list
 	pomelo.on('onAdd', function(data) {
+        alert("xxx");
 		var user = data.user;
 		tip('online', user);
 		addUser(user);

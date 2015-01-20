@@ -1,3 +1,4 @@
+var roomList= require('../../../entity/room');
 module.exports = function(app) {
 	return new ChatRemote(app);
 };
@@ -6,41 +7,36 @@ var ChatRemote = function(app) {
 	this.app = app;
 	this.channelService = app.get('channelService');
 };
+//ChatRemote.prototype.getRoomList=function(sid,flag,cb){
+//    var myRoomList=roomList.getRoomList();
+//    console.log(myRoomList)
+//    cb(myRoomList);
+//}
 
-/**
- * Add user into chat channel.
- *
- * @param {String} uid unique id for user
- * @param {String} sid server id
- * @param {String} name channel name
- * @param {boolean} flag channel parameter
- *
- */
-ChatRemote.prototype.add = function(uid, sid, name, flag, cb) {
-	var channel = this.channelService.getChannel(name, flag);
+ChatRemote.prototype.add = function(uid, sid, rid, flag, cb) {
+	var channel = this.channelService.getChannel("room", flag);
 	var username = uid.split('*')[0];
+    var myRoomList=null;
+    myRoomList=roomList.addUser(rid,username);
 	var param = {
 		route: 'onAdd',
-		user: username
+        username: username,
+        rid:rid
 	};
-	channel.pushMessage(param);
+    var user=channel.getMembers();
+    console.log("send"+user.length+"次")
+    channel.pushMessage(param);
 
-	if( !! channel) {
-		channel.add(uid, sid);
-	}
 
-	cb(this.get(name, flag));
+    if( !! channel) {
+        channel.add(uid, sid);
+    }
+
+
+	cb(myRoomList);
 };
 
-/**
- * Get user from chat channel.
- *
- * @param {Object} opts parameters for request
- * @param {String} name channel name
- * @param {boolean} flag channel parameter
- * @return {Array} users uids in channel
- *
- */
+
 ChatRemote.prototype.get = function(name, flag) {
 	var users = [];
 	var channel = this.channelService.getChannel(name, flag);
@@ -53,14 +49,7 @@ ChatRemote.prototype.get = function(name, flag) {
 	return users;
 };
 
-/**
- * Kick user out chat channel.
- *
- * @param {String} uid unique id for user
- * @param {String} sid server id
- * @param {String} name channel name
- *
- */
+
 ChatRemote.prototype.kick = function(uid, sid, name, cb) {
 	var channel = this.channelService.getChannel(name, false);
 	// leave channel
@@ -73,5 +62,6 @@ ChatRemote.prototype.kick = function(uid, sid, name, cb) {
 		user: username
 	};
 	channel.pushMessage(param);
-	cb();
+
+	cb(null);
 };

@@ -17,7 +17,7 @@ MyDirective.directive('room',['roomListService',function(roomListService) {
             element.bind( "click", function() {
 
                  var route = "connector.entryHandler.enter";
-                roomListService.longRequest(route,{rid:scope.id,username:roomListService.username})
+                roomListService.longRequest(route,{rid:scope.id,username:roomListService.username},3051)
 
             });
         }

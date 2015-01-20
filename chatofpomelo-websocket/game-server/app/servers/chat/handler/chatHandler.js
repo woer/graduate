@@ -1,5 +1,5 @@
 var chatRemote = require('../remote/chatRemote');
-
+var roomList= require('../../../entity/room');
 module.exports = function(app) {
 	return new Handler(app);
 };
@@ -10,14 +10,7 @@ var Handler = function(app) {
 
 var handler = Handler.prototype;
 
-/**
- * Send messages to users
- *
- * @param {Object} msg message from client
- * @param {Object} session
- * @param  {Function} next next stemp callback
- *
- */
+
 handler.send = function(msg, session, next) {
 	var rid = session.get('rid');
 	var username = session.uid.split('*')[0];
@@ -46,3 +39,40 @@ handler.send = function(msg, session, next) {
 		route: msg.route
 	});
 };
+handler.get=function(msg, session, next){
+    console.log("enter get")
+    var roomLists=roomList.getRoomList();
+    console.log(roomLists)
+    next(null, {
+        roomList: roomLists
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,10 +1,10 @@
 <div class="inner_room" ng-controller="roomListCtrl">
-    <div style="margin-left: 20px;margin-top: 20px;">
+    {{roomlist}}
+    <div style="margin-left: 20px;margin-top: 20px;" class="playDetail">
         <img src="{{header}}" style="width: 100px;height: 100px">
         <div  style="margin-top: 15px;font-size: 17px;width: 100px;text-align: center">{{name}}</div>
     </div>
 <div>
-
 </div>
     <div class="roomlist">
     <room ng-repeat='room in roomlist' id="room.id" roomowner="room.roomowner" number="room.number" states="room.states">

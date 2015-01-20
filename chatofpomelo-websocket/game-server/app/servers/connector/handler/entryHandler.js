@@ -1,21 +1,20 @@
 module.exports = function(app) {
 	return new Handler(app);
 };
-
+var roomList= require('../../../entity/beforeRoom');
 var Handler = function(app) {
 		this.app = app;
 };
 
 var handler = Handler.prototype;
+handler.getRoomList=function(msg, session, next){
+var roomLists=roomList.getRoomList()
+        next(null, {
+            roomList:roomLists
+        });
 
-/**
- * New client entry chat server.
- *
- * @param  {Object}   msg     request message
- * @param  {Object}   session current session object
- * @param  {Function} next    next stemp callback
- * @return {Void}
- */
+}
+
 handler.enter = function(msg, session, next) {
 	var self = this;
 	var rid = msg.rid;
@@ -41,20 +40,16 @@ handler.enter = function(msg, session, next) {
 	session.on('closed', onUserLeave.bind(null, self.app));
 
 	//put user into channel
-	self.app.rpc.chat.chatRemote.add(session, uid, self.app.get('serverId'), rid, true, function(users){
+	self.app.rpc.chat.chatRemote.add(session, uid, self.app.get('serverId'), rid, true, function(roomLists){
+        var roomLists=roomList.addUser(rid,msg.username)
+       console.log(roomLists)
 		next(null, {
-			users:users
+            roomList:roomLists
 		});
 	});
 };
 
-/**
- * User log out handler
- *
- * @param {Object} app current application
- * @param {Object} session current session object
- *
- */
+
 var onUserLeave = function(app, session) {
 	if(!session || !session.uid) {
 		return;
