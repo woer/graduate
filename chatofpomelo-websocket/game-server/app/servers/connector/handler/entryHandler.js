@@ -17,7 +17,6 @@ var handler = Handler.prototype;
  * @return {Void}
  */
 handler.enter = function(msg, session, next) {
-
 	var self = this;
 	var rid = msg.rid;
 	var uid = msg.username + '*' + rid

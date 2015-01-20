@@ -29,6 +29,7 @@ myController.controller('registerCtrl',function($rootScope,$scope,$location){
                name: $scope.login_name,
                pass:$scope.login_pass
            }, function (data) {
+              pomelo.disconnect();
               if(data.login) {
 
                   $rootScope.name=data.name;
@@ -72,7 +73,12 @@ pomelo.init({
 myController.controller('roomListCtrl',['$rootScope','$scope','$location','roomListService',function($rootScope,$scope,$location,roomListService){
 
  $scope.roomlist=roomListService.roomlist;
-console.log($scope.roomlist)
+    $scope.$on('change', function( event ) {
+        alert("change roomlist")
+        $scope.roomlist = roomListService.roomlist;
+        $scope.$apply();
+    });
+
 }])
 
 

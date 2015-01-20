@@ -19,6 +19,7 @@ var handler = Handler.prototype;
  *
  */
 handler.queryEntry = function(msg, session, next) {
+    console.log("gate")
 	var connectors = this.app.getServersByType('connector');
 	if(!connectors || connectors.length === 0) {
 		next(null, {
@@ -32,6 +33,7 @@ var user=new User({
     email:msg.email,
     header:''
 })
+
     user.save(function(err,user){
         next(null, {
             code: 200

@@ -4,12 +4,11 @@
         <div  style="margin-top: 15px;font-size: 17px;width: 100px;text-align: center">{{name}}</div>
     </div>
 <div>
-{{roomlist}}
-
 
 </div>
-    <room class='expander' ng-repeat='room in roomlist'>
+    <div class="roomlist">
+    <room ng-repeat='room in roomlist' id="room.id" roomowner="room.roomowner" number="room.number" states="room.states">
     </room>
-
+</div>
 
 </div>

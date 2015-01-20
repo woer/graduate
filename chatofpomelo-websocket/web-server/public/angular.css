@@ -89,9 +89,29 @@ margin-top: 10px;
     background-color: #ffffff;
     margin-top: 30px;
 }
+.room{
+    float: left;
+    width: 50%;
+    border: solid 1px;
+    height: 125px;
 
+}
+.room:hover{
+    border: solid 3px red;
+}
 
-
+.roomlist{
+    float:right;
+    width: 70%;
+    border: solid 1px;
+}
+.roomImg{
+    margin-left: 50px;
+margin-top: 25px;
+    display: inline;
+    float: left;
+    height: 120px;
+}
 
 
 
