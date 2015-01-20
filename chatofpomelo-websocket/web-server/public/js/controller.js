@@ -23,29 +23,26 @@ myController.controller('registerCtrl',function($scope,$location){
 })
 
 
-myController.controller('reg_submitCtrl',function($rootScope,$scope){
+myController.controller('reg_submitCtrl',function($rootScope,$scope,$location){
     var pomelo=$rootScope.pomelo;
-    if($scope.reg_pass==$scope.reg_repass){
-        $scope.repasstest=true;
-    }
-    else{
-        $scope.repasstest=false;
-    }
-
-
     $scope.reg_submit=function() {
-        alert($scope.reg_name)
-var route = 'gate.gateHandler.queryEntry';
+
+      var route = 'gate.gateHandler.queryEntry';
 pomelo.init({
     host: '127.0.0.1',
     port: 3014,
     log: true
 }, function (data) {
+
     pomelo.request(route, {
         name: $scope.reg_name,
-        pass:$scope.reg_pass
+        pass:$scope.reg_pass,
+        email:$scope.reg_email
     }, function (data) {
-
+//        pomelo.disconnect();
+        alert(data.code)
+       $location.path('/index');
+        $rootScope.$apply();
     })
 })
     }

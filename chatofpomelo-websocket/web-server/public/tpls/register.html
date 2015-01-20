@@ -17,7 +17,7 @@
                 <label class="control-label col-sm-3" style="font-size: 20px">密码</label>
                 <div class="col-sm-5">
                     <input type="password" class="form-control" name="reg_pass" ng-model="reg_pass"
-                           placeholder="请输入密码" required ng-minlength="5">
+                           placeholder="请输入密码" required ng-minlength="1">
                 </div>
                 <div ng-show='myForm.reg_pass.$dirty&&myForm.reg_pass.$valid'>验证成功</div>
                 <div ng-show='myForm.reg_pass.$invalid'>密码不正确</div>
@@ -26,7 +26,7 @@
                 <label class="control-label col-sm-3" style="font-size: 20px">重复密码</label>
                 <div class="col-sm-5">
                     <input type="password" class="form-control" name="reg_repass" ng-model="reg_repass"
-                           placeholder="请再次输入密码" required ng-minlength="5">
+                           placeholder="请再次输入密码" required ng-minlength="1">
                 </div>
                 <div ng-show='myForm.reg_repass.$dirty&&myForm.reg_repass.$valid'>验证成功</div>
                 <div ng-show='myForm.reg_repass.$invalid'>重复密码不正确</div>
@@ -34,7 +34,7 @@
             <div class="form-group" >
                 <label class="control-label col-sm-3" style="font-size: 20px">邮箱</label>
                 <div class="col-sm-5">
-                    <input type="email" class="form-control" name="reg_email" ng-model="reg_email"
+                    <input type="text" class="form-control" name="reg_email" ng-model="reg_email"
                            placeholder="请输入邮箱" required>
                 </div>
                 <div ng-show='myForm.reg_email.$dirty&&myForm.reg_email.$valid'>验证成功</div>
