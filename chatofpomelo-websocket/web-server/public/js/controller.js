@@ -40,16 +40,12 @@ myController.controller('registerCtrl',['$rootScope','$scope','$location','roomL
                   }, function (data) {
                       $rootScope.header='img/17.jpg';
                       $rootScope.name=username;
-                  var route = "connector.entryHandler.getRoomList";
-                  pomelo.request(route, {rid:"rid",username:"username"}, function (data) {
-
+                  var route = "connector.entryHandler.enter";
+                  pomelo.request(route, {rid:"room",username:username}, function (data) {
                      roomListService.roomlist=data.roomList;
                       roomListService.username=username;
                       $location.path('/changeRoom');
                       $rootScope.$apply();
-                      pomelo.disconnect();
-
-
                   })
 
 
@@ -97,24 +93,29 @@ myController.controller('roomListCtrl',['$rootScope','$scope','$location','roomL
         $scope.roomlist = roomListService.roomlist;
         $scope.$apply();
     });
-pomelo.on("onAdd",function(data){
-    alert(data.rid+"data.myRoomList"+data.username)
-var id=data.rid;
-    var username=data.username;
-        if(!$scope.roomlist[id].roomowner){
-            $scope.roomlist[id].roomowner=data.username;
-        }
-    for(var i=0;i<$scope.roomlist[id].user.length;i++){
-        if($scope.roomlist[id].user[i]==username){
-            return;
-        }
+//pomelo.on("onAdd",function(data){
+//    alert(data.rid+"data.myRoomList"+data.username)
+//var id=data.rid;
+//    var username=data.username;
+//        if(!$scope.roomlist[id].roomowner){
+//            $scope.roomlist[id].roomowner=data.username;
+//        }
+//    for(var i=0;i<$scope.roomlist[id].user.length;i++){
+//        if($scope.roomlist[id].user[i]==username){
+//            return;
+//        }
+//
+//    }
+//    $scope.roomlist[id].user.push(username)
+//    roomListService.roomlist=$scope.roomlist;
+//        $scope.$apply();
+//})
 
-    }
-    roomListService.roomlist=$scope.roomlist[id].user.push(username)
+    pomelo.on("onChoose",function(data){
+        roomListService.roomlist=$scope.roomlist=data.roomList;
         $scope.$apply();
-})
 
-
+    })
 
 
 }])

@@ -41,7 +41,7 @@ handler.enter = function(msg, session, next) {
 
 	//put user into channel
 	self.app.rpc.chat.chatRemote.add(session, uid, self.app.get('serverId'), rid, true, function(roomLists){
-        var roomLists=roomList.addUser(rid,msg.username)
+  //      var roomLists=roomList.addUser(rid,msg.username)
        console.log(roomLists)
 		next(null, {
             roomList:roomLists

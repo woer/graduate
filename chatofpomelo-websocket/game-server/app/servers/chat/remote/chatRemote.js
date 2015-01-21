@@ -17,14 +17,14 @@ ChatRemote.prototype.add = function(uid, sid, rid, flag, cb) {
 	var channel = this.channelService.getChannel("room", flag);
 	var username = uid.split('*')[0];
     var myRoomList=null;
-    myRoomList=roomList.addUser(rid,username);
+    myRoomList=roomList.getRoomList();
 	var param = {
 		route: 'onAdd',
         username: username,
         rid:rid
 	};
-    var user=channel.getMembers();
-    console.log("send"+user.length+"次")
+
+
     channel.pushMessage(param);
 
 

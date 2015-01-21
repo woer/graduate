@@ -40,14 +40,31 @@ handler.send = function(msg, session, next) {
 	});
 };
 handler.get=function(msg, session, next){
-    console.log("enter get")
     var roomLists=roomList.getRoomList();
     console.log(roomLists)
     next(null, {
         roomList: roomLists
     });
 }
+handler.chooseRoom=function(msg, session, next){
 
+    var channelService = this.app.get('channelService');
+    var channel = channelService.getChannel('room', false);
+    var roomLists=roomList.addUser(msg.rid,msg.username);
+    console.log(roomLists)
+    var param = {
+       roomList: roomLists
+    };
+
+    channel.pushMessage('onChoose', param);
+
+
+
+
+    next(null, {
+        roomList: roomLists
+    });
+}
 
 
 

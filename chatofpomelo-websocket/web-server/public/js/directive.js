@@ -16,8 +16,10 @@ MyDirective.directive('room',['roomListService',function(roomListService) {
         link:function(scope, element, attrs){
             element.bind( "click", function() {
 
-                 var route = "connector.entryHandler.enter";
-                roomListService.longRequest(route,{rid:scope.id,username:roomListService.username},3051)
+                var route = "chat.chatHandler.chooseRoom";
+                roomListService.roomRequest(route,{rid:scope.id,username:roomListService.username},function(){
+                    roomListService.URLto('/index')
+                })
 
             });
         }
