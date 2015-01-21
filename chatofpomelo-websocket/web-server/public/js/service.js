@@ -2,6 +2,7 @@ var myServices = angular.module("MyServices", []);
 myServices.service( 'roomListService', [ '$rootScope','$location' ,function( $rootScope,$location ) {
     var pomelo=$rootScope.pomelo;
     var service = {
+        message:null,
         pomelo:pomelo,
         roomlist:[],
         username:"",
@@ -27,10 +28,11 @@ myServices.service( 'roomListService', [ '$rootScope','$location' ,function( $ro
             pomelo.request(route, data, function(data) {
                 service.roomlist=data.roomList;
                 $rootScope.$broadcast('change');
-                callback(null,data);
+                callback(data);
             })
         },
         URLto:function(path){
+
             $location.path(path)
             $rootScope.$apply();
         }

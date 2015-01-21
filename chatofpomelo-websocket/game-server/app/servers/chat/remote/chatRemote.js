@@ -7,11 +7,7 @@ var ChatRemote = function(app) {
 	this.app = app;
 	this.channelService = app.get('channelService');
 };
-//ChatRemote.prototype.getRoomList=function(sid,flag,cb){
-//    var myRoomList=roomList.getRoomList();
-//    console.log(myRoomList)
-//    cb(myRoomList);
-//}
+
 
 ChatRemote.prototype.add = function(uid, sid, rid, flag, cb) {
 	var channel = this.channelService.getChannel("room", flag);
@@ -23,12 +19,8 @@ ChatRemote.prototype.add = function(uid, sid, rid, flag, cb) {
         username: username,
         rid:rid
 	};
-
-
-    channel.pushMessage(param);
-
-
-    if( !! channel) {
+ channel.pushMessage(param);
+   if( !! channel) {
         channel.add(uid, sid);
     }
 

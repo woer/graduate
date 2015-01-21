@@ -32,24 +32,49 @@ MyDirective.directive('user',['roomListService',function(roomListService) {
         scope:{
             name : '=',
             position : '=',
-            ready : '='
+            ready : '=',
+            roomowner:'='
         },
-        template : '<div class="user text-center" >'
-            + '<span >{{name}}</span><br>'
-            + '<span ><img src="img/18.png"></span><br>'
-            + '<span >{{position}}</span><br>'
-            + '<span >{{ready}}</span><br>'
+        template : '<div class="user text-center" ng-show="name">'
+            + '<br><span class="badge">{{name}}</span><br><br>'
+            + '<span ><img src="img/19.png"></span><br><br>'
+            + '<span class="badge">{{position}}</span><br>'
+            + '<span class="badge" ng-show="ready" >ready</span><br>'
             + '</div>',
         link:function(scope, element, attrs){
             element.bind( "click", function() {
-      alert("xx")
+
 
         });
 }
 }
 }]);
+MyDirective.directive('send',['roomListService',function(roomListService) {
+    return{
+        restrict : 'EACM',
+        link:function(scope, element, attrs){
+         element.bind("keydown",function(event){
+
+             if(event.which==13){
+                 if(element.val().length){
+                 var route = "chat.chatHandler.send";
+                 var data={
+                     message:element.val(),
+                     rid:roomListService.rid,
+                     user:roomListService.username
+                 }
+                 roomListService.roomRequest(route,data,function(){
+                     element.val("")
+                 })
+                 }
+             }
+         })
+        }
 
 
+    }
+
+}])
 
 
 

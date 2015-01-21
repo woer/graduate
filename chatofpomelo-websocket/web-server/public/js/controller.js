@@ -105,17 +105,74 @@ myController.controller('roomListCtrl',['$rootScope','$scope','$location','roomL
 myController.controller('userListCtrl',['$rootScope','$scope','$location','roomListService',function($rootScope,$scope,$location,roomListService){
     var pomelo=$rootScope.pomelo;
      var rid=roomListService.rid;
+    $scope.start=true;
+    $scope.username=roomListService.username;
     $scope.users=roomListService.roomlist[rid].user;
+    $scope.roomowner=roomListService.roomlist[rid].roomowner;
     $scope.$on('change', function( event ) {
         $scope.roomlist = roomListService.roomlist;
         $scope.$apply();
     });
 
     pomelo.on("onChoose",function(data){
+
         roomListService.roomlist=$scope.roomlist=data.roomList;
+        $scope.users=data.roomList[rid].user;
+        $scope.$apply();
+        $scope.start = true;
         $scope.$apply();
 
     })
+    pomelo.on("onSend",function(data){
+        $scope.send="";
+        $scope.messages=roomListService.message=data.message;
+        $scope.$apply();
+    })
+
+
+    $scope.doReady=function(){
+
+        var route = "chat.chatHandler.doReady";
+        roomListService.roomRequest(route,{
+            name:$scope.username,
+            rid:rid
+        },function(){
+        })
+    }
+
+    $scope.doStart=function(){
+
+        var route = "chat.chatHandler.doStart";
+        roomListService.roomRequest(route,{
+            rid:rid
+        },function(){
+        })
+    }
+
+
+
+
+    pomelo.on("onReady",function(data){
+
+        roomListService.roomlist=$scope.roomlist=data.roomList;
+        $scope.users=data.roomList[rid].user;
+           for (var i = 1; i < 20; i++) {
+                if ($scope.users[i].ready) {
+                    if ($scope.users[i].ready != 'ready') {
+                        $scope.start=true;
+                       return;
+                    }
+                }
+            }
+        $scope.start = false;
+        $scope.$apply();
+    })
+
+
+
+
+
+
 
 
 }])

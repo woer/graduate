@@ -1,7 +1,7 @@
 module.exports = function(app) {
 	return new Handler(app);
 };
-var roomList= require('../../../entity/beforeRoom');
+
 var Handler = function(app) {
 		this.app = app;
 };

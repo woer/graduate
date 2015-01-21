@@ -1,6 +1,32 @@
-<div class="gamedesk" ng-controller="userListCtrl">
-    {{users}}
+<div class="gamebody" ng-controller="userListCtrl">
+<div class="gamedesk" >
+
     <user ng-repeat='user in users' name="user.name" ready="user.ready" position="user.position">
     </user>
+
+    <div class="buttons">
+    <div ng-if="roomowner==username"><button class="btn btn-primary btn-lg" ng-hide="start" ng-click="doStart()">开始</button></div>
+    <div ng-if="roomowner!=username"><button class="btn btn-primary btn-lg" ng-click="doReady()">准备</button></div>
+        </div>
 </div>
-<!--<div class="talk">talk界面</div>-->
+    <div class="talk"><div class="talkMessage">
+        <div ng-repeat='mess in messages'><div >
+            <span class="badge" style="background-color: lightcoral">{{mess.username}}:</span><span class="badge text-center" style="background-color: #c0c0c0">{{mess.messgae}}</span></div></div></div><div class="input" ><input send  class="input-lg" style="height: 50px;width: 323px;background-color: lightgrey" type="text" ng-model="send" placeholder="输入对话"></div></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
