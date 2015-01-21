@@ -93,23 +93,6 @@ myController.controller('roomListCtrl',['$rootScope','$scope','$location','roomL
         $scope.roomlist = roomListService.roomlist;
         $scope.$apply();
     });
-//pomelo.on("onAdd",function(data){
-//    alert(data.rid+"data.myRoomList"+data.username)
-//var id=data.rid;
-//    var username=data.username;
-//        if(!$scope.roomlist[id].roomowner){
-//            $scope.roomlist[id].roomowner=data.username;
-//        }
-//    for(var i=0;i<$scope.roomlist[id].user.length;i++){
-//        if($scope.roomlist[id].user[i]==username){
-//            return;
-//        }
-//
-//    }
-//    $scope.roomlist[id].user.push(username)
-//    roomListService.roomlist=$scope.roomlist;
-//        $scope.$apply();
-//})
 
     pomelo.on("onChoose",function(data){
         roomListService.roomlist=$scope.roomlist=data.roomList;
@@ -119,7 +102,23 @@ myController.controller('roomListCtrl',['$rootScope','$scope','$location','roomL
 
 
 }])
+myController.controller('userListCtrl',['$rootScope','$scope','$location','roomListService',function($rootScope,$scope,$location,roomListService){
+    var pomelo=$rootScope.pomelo;
+     var rid=roomListService.rid;
+    $scope.users=roomListService.roomlist[rid].user;
+    $scope.$on('change', function( event ) {
+        $scope.roomlist = roomListService.roomlist;
+        $scope.$apply();
+    });
 
+    pomelo.on("onChoose",function(data){
+        roomListService.roomlist=$scope.roomlist=data.roomList;
+        $scope.$apply();
+
+    })
+
+
+}])
 
 
 

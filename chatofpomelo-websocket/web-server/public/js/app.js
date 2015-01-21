@@ -77,4 +77,10 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 
 
         })
+        .state('gameDesk', {
+            url: '/gameDesk',
+            templateUrl: 'tpls/gamedesk.html'
+
+
+        })
 });

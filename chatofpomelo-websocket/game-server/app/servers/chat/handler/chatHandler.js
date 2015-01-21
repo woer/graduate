@@ -41,7 +41,6 @@ handler.send = function(msg, session, next) {
 };
 handler.get=function(msg, session, next){
     var roomLists=roomList.getRoomList();
-    console.log(roomLists)
     next(null, {
         roomList: roomLists
     });
@@ -57,9 +56,6 @@ handler.chooseRoom=function(msg, session, next){
     };
 
     channel.pushMessage('onChoose', param);
-
-
-
 
     next(null, {
         roomList: roomLists

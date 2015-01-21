@@ -18,10 +18,98 @@ MyDirective.directive('room',['roomListService',function(roomListService) {
 
                 var route = "chat.chatHandler.chooseRoom";
                 roomListService.roomRequest(route,{rid:scope.id,username:roomListService.username},function(){
-                    roomListService.URLto('/index')
+                    roomListService.URLto('/gameDesk')
+                    roomListService.rid=scope.id;
                 })
 
             });
         }
     }
 }]);
+MyDirective.directive('user',['roomListService',function(roomListService) {
+    return {
+        restrict : 'EA',
+        scope:{
+            name : '=',
+            position : '=',
+            ready : '='
+        },
+        template : '<div class="user text-center" >'
+            + '<span >{{name}}</span><br>'
+            + '<span ><img src="img/18.png"></span><br>'
+            + '<span >{{position}}</span><br>'
+            + '<span >{{ready}}</span><br>'
+            + '</div>',
+        link:function(scope, element, attrs){
+            element.bind( "click", function() {
+      alert("xx")
+
+        });
+}
+}
+}]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

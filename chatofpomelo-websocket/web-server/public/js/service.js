@@ -5,6 +5,7 @@ myServices.service( 'roomListService', [ '$rootScope','$location' ,function( $ro
         pomelo:pomelo,
         roomlist:[],
         username:"",
+        rid:"",
         longRequest: function (route,data,port) {
             pomelo.init({
                 host: '127.0.0.1',

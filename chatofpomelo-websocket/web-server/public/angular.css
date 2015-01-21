@@ -88,9 +88,29 @@ margin-top: 10px;
     margin: 0 auto;
     background-color: #ffffff;
     margin-top: 30px;
-
-
 }
+.gamedesk{
+    border:  solid 1px red;
+    width: 75%;
+    height: 550px;
+    float: left;
+    background-color: #ffffff;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+/*.talk{*/
+    /*border:  solid 1px red;*/
+    /*width: 20%;*/
+    /*height: 550px;*/
+    /*float: right;*/
+    /*background-color: #ffffff;*/
+    /*margin-top: 20px;*/
+    /*margin-right: 20px;*/
+
+/*}*/
+
+
+
 .room{
     float: left;
     width: 50%;
@@ -123,7 +143,10 @@ margin-top: 25px;
     float: left;
     height: 120px;
 }
-
+.user{
+   margin-right: 28px;
+    float: left;
+}
 
 
 

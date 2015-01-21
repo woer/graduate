@@ -7,7 +7,7 @@
 <div>
 </div>
     <div class="roomlist">
-    <room ng-repeat='room in roomlist' id="room.id" roomowner="room.roomowner" number="room.number" states="room.states">
+    <room ng-repeat='room in roomlist track by $index' id="room.id" roomowner="room.roomowner" number="room.number" states="room.states">
     </room>
 </div>
 
