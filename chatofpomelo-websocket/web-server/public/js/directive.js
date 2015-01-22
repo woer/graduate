@@ -17,7 +17,8 @@ MyDirective.directive('room',['roomListService',function(roomListService) {
             element.bind( "click", function() {
 
                 var route = "chat.chatHandler.chooseRoom";
-                roomListService.roomRequest(route,{rid:scope.id,username:roomListService.username},function(){
+                roomListService.roomRequest(route,{rid:scope.id,username:roomListService.username},function(data){
+//                    roomListService.roomlist=data.roomlist;
                     roomListService.URLto('/gameDesk')
                     roomListService.rid=scope.id;
                 })
@@ -40,6 +41,7 @@ MyDirective.directive('user',['roomListService',function(roomListService) {
             + '<span ><img src="img/19.png"></span><br><br>'
             + '<span class="badge">{{position}}</span><br>'
             + '<span class="badge" ng-show="ready" >ready</span><br>'
+            + '<span class="badge" ng-show="death" >death</span><br>'
             + '</div>',
         link:function(scope, element, attrs){
             element.bind( "click", function() {

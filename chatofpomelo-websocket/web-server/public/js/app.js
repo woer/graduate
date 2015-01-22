@@ -1,10 +1,16 @@
 var routerApp = angular.module('routerApp', ['ui.router','MyController','MyServices','MyDirective']);
 var pomelo=window.pomelo;
 
-routerApp.run(function($rootScope, $state, $stateParams) {
+routerApp.run(function($rootScope, $state, $stateParams,$location) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
     pomelo=$rootScope.pomelo= window.pomelo;
+    $rootScope.$on("$viewContentLoaded",function(){
+        if(!$rootScope.roomlist){
+            $location.path('/index');
+        }
+
+    })
 
 });
 

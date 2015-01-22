@@ -89,6 +89,7 @@ myController.controller('roomListCtrl',['$rootScope','$scope','$location','roomL
     $scope.name=$rootScope.name;
     $scope.header=$rootScope.header;
  $scope.roomlist=roomListService.roomlist;
+    $rootScope.roomlist=roomListService.username;
     $scope.$on('change', function( event ) {
         $scope.roomlist = roomListService.roomlist;
         $scope.$apply();
@@ -96,6 +97,9 @@ myController.controller('roomListCtrl',['$rootScope','$scope','$location','roomL
 
     pomelo.on("onChoose",function(data){
         roomListService.roomlist=$scope.roomlist=data.roomList;
+
+        console.log("onChoose"+roomListService.roomlist)
+
         $scope.$apply();
 
     })
@@ -105,30 +109,48 @@ myController.controller('roomListCtrl',['$rootScope','$scope','$location','roomL
 myController.controller('userListCtrl',['$rootScope','$scope','$location','roomListService',function($rootScope,$scope,$location,roomListService){
     var pomelo=$rootScope.pomelo;
      var rid=roomListService.rid;
+    $scope.roomlist=null;
     $scope.start=true;
+    $scope.toReady=true;
+    $scope.dounReady=false;
     $scope.username=roomListService.username;
     $scope.users=roomListService.roomlist[rid].user;
     $scope.roomowner=roomListService.roomlist[rid].roomowner;
     $scope.$on('change', function( event ) {
-        $scope.roomlist = roomListService.roomlist;
+       $scope.roomlist = roomListService.roomlist;
         $scope.$apply();
     });
-
     pomelo.on("onChoose",function(data){
-
         roomListService.roomlist=$scope.roomlist=data.roomList;
+        console.log("onChoose"+roomListService.roomlist)
+        $scope.toReady=true;
+        $scope.dounReady=false;
         $scope.users=data.roomList[rid].user;
-        $scope.$apply();
+        $scope.roomowner=roomListService.roomlist[rid].roomowner;
+
         $scope.start = true;
         $scope.$apply();
 
     })
     pomelo.on("onSend",function(data){
+        console.log("onSend"+roomListService.roomlist)
         $scope.send="";
         $scope.messages=roomListService.message=data.message;
         $scope.$apply();
     })
+    $scope.unReady=function(){
+        var route = "chat.chatHandler.unReady";
+        roomListService.roomRequest(route,{
+            name:$scope.username,
+            rid:rid
+        },function(){
+            $scope.toReady=true;
+            $scope.dounReady=false;
+            $scope.$apply();
+        })
 
+
+    }
 
     $scope.doReady=function(){
 
@@ -137,25 +159,40 @@ myController.controller('userListCtrl',['$rootScope','$scope','$location','roomL
             name:$scope.username,
             rid:rid
         },function(){
+            $scope.toReady=false;
+            $scope.dounReady=true;
+
+            $scope.$apply()
         })
     }
 
     $scope.doStart=function(){
-
         var route = "chat.chatHandler.doStart";
         roomListService.roomRequest(route,{
             rid:rid
         },function(){
+            $scope.start=true;
+            $scope.$apply();
+
         })
     }
 
+    pomelo.on("doStart",function(data){
+        console.log("doStart"+roomListService.roomlist)
+        $scope.toReady=false;
+        $scope.dounReady=false;
+        $scope.users=data.roomList.user;
 
+        $scope.$apply();
+
+    })
 
 
     pomelo.on("onReady",function(data){
-
-        roomListService.roomlist=$scope.roomlist=data.roomList;
-        $scope.users=data.roomList[rid].user;
+        console.dir(roomListService);
+        console.log("onReady"+roomListService.roomlist)
+        $scope.users=data.user;
+        $rootScope.$apply();
            for (var i = 1; i < 20; i++) {
                 if ($scope.users[i].ready) {
                     if ($scope.users[i].ready != 'ready') {
@@ -164,11 +201,17 @@ myController.controller('userListCtrl',['$rootScope','$scope','$location','roomL
                     }
                 }
             }
-        $scope.start = false;
-        $scope.$apply();
+       $scope.start = false;
+        $rootScope.$apply();
     })
 
-
+    pomelo.on("unReady",function(data){
+        console.log("unReady"+roomListService.roomlist)
+        $scope.users=data.user;
+        $scope.start = true;
+        $scope.$apply();
+        $rootScope.$apply();
+    })
 
 
 

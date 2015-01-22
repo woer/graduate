@@ -1,12 +1,13 @@
 <div class="gamebody" ng-controller="userListCtrl">
-<div class="gamedesk" >
+<div class="gamedesk">
 
     <user ng-repeat='user in users' name="user.name" ready="user.ready" position="user.position">
     </user>
 
     <div class="buttons">
     <div ng-if="roomowner==username"><button class="btn btn-primary btn-lg" ng-hide="start" ng-click="doStart()">开始</button></div>
-    <div ng-if="roomowner!=username"><button class="btn btn-primary btn-lg" ng-click="doReady()">准备</button></div>
+    <div ng-if="roomowner!=username"><button class="btn btn-primary btn-lg" ng-click="doReady()" ng-show="toReady">准备{{toReady}}</button></div>
+    <div ng-if="roomowner!=username"><button class="btn btn-primary btn-lg" ng-click="unReady()" ng-show="dounReady">取消准备{{dounReady}}</button></div>
         </div>
 </div>
     <div class="talk"><div class="talkMessage">

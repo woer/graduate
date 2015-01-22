@@ -15,7 +15,6 @@ myServices.service( 'roomListService', [ '$rootScope','$location' ,function( $ro
             }, function () {
 
                 pomelo.request(route, data, function(data) {
-
                     service.roomlist=data.roomList;
                     $rootScope.$broadcast('change');
                     $location.path("/index")
@@ -26,9 +25,9 @@ myServices.service( 'roomListService', [ '$rootScope','$location' ,function( $ro
         },
         roomRequest:function(route,data,callback){
             pomelo.request(route, data, function(data) {
-                service.roomlist=data.roomList;
-                $rootScope.$broadcast('change');
-                callback(data);
+//                service.roomlist=data.roomList;
+//                $rootScope.$broadcast('change');
+               callback(data);
             })
         },
         URLto:function(path){
