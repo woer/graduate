@@ -6,6 +6,7 @@ MyDirective.directive('room',['roomListService',function(roomListService) {
             id : '=',
             roomowner : '=',
             states : '='
+
         },
         template : '<div class="room text-center" >'
             + '<div class="roomImg"><img src="img/18.png"></div>'
@@ -34,18 +35,25 @@ MyDirective.directive('user',['roomListService',function(roomListService) {
             name : '=',
             position : '=',
             ready : '=',
-            roomowner:'='
+            roomowner:'=',
+            action:'=',
+            username:'=',
+            stage:'=',
+            myaction:'='
         },
         template : '<div class="user text-center" ng-show="name">'
             + '<br><span class="badge">{{name}}</span><br><br>'
             + '<span ><img src="img/19.png"></span><br><br>'
             + '<span class="badge">{{position}}</span><br>'
             + '<span class="badge" ng-show="ready" >ready</span><br>'
+            + '<span class="badge" ng-if="action==myaction&&action!=farmer">{{action}}</span><br>'
             + '<span class="badge" ng-show="death" >death</span><br>'
             + '</div>',
         link:function(scope, element, attrs){
+            scope.farmer='平民';
+            console.log(scope.username+"=="+scope.stage+"="+scope.action+"==="+scope.myaction)
             element.bind( "click", function() {
-
+                     alert("xx")
 
         });
 }
@@ -61,6 +69,8 @@ MyDirective.directive('send',['roomListService',function(roomListService) {
                  if(element.val().length){
                  var route = "chat.chatHandler.send";
                  var data={
+                     action:scope.myaction,
+                     stage:scope.stage,
                      message:element.val(),
                      rid:roomListService.rid,
                      user:roomListService.username

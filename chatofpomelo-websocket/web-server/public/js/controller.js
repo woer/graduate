@@ -106,10 +106,18 @@ myController.controller('roomListCtrl',['$rootScope','$scope','$location','roomL
 
 
 }])
-myController.controller('userListCtrl',['$rootScope','$scope','$location','roomListService',function($rootScope,$scope,$location,roomListService){
+myController.controller('userListCtrl',['$timeout','$rootScope','$scope','$location','roomListService',function($timeout,$rootScope,$scope,$location,roomListService){
     var pomelo=$rootScope.pomelo;
      var rid=roomListService.rid;
+    $scope.stage='';
+    $scope.width=100;
+    $scope.text='天黑了，杀手出来杀人吧'
+    $scope.textShow=false;
+    $scope.back=true;
+    $scope.myType='info'
     $scope.roomlist=null;
+    $scope.myaction="";
+    $scope.remain='';
     $scope.start=true;
     $scope.toReady=true;
     $scope.dounReady=false;
@@ -177,12 +185,45 @@ myController.controller('userListCtrl',['$rootScope','$scope','$location','roomL
         })
     }
 
+    function timer(){
+        var tim=setInterval(function(){
+            console.log($scope.width)
+            $scope.width=$scope.width-2;
+            if($scope.width==0){
+                clearInterval(tim)
+            }
+            if($scope.width<50&&$scope.width>15){
+                $scope.myType='warning'
+            }
+            if($scope.width<15){
+                $scope.myType='danger'
+            }
+            $scope.$apply();
+
+        },1000);
+    }
+
+
     pomelo.on("doStart",function(data){
-        console.log("doStart"+roomListService.roomlist)
+        timer();
+        $scope.textShow=true;
+        $timeout(function(){
+            $scope.textShow=false;
+        },3000);
+        $scope.stage='black';
         $scope.toReady=false;
         $scope.dounReady=false;
         $scope.users=data.roomList.user;
 
+        $scope.remain=data.roomList.remain;
+        $scope.back=false;
+        var users=$scope.users;
+        for(var i=0;i<20;i++){
+            if(users[i].name==$scope.username){
+                     $scope.myaction=users[i].action;
+            }
+
+        }
         $scope.$apply();
 
     })

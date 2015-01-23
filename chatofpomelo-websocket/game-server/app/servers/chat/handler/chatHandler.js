@@ -18,15 +18,34 @@ handler.send = function(msg, session, next) {
 	var param = {
         message: message
 	};
-    var userlist=roomList.getUserList(msg.rid);
-    for(var i=0;i<userlist.length;i++){
-        var tuid = userlist[i] + '*room';
-        		channelService.pushMessageByUids('onSend', param, [{
-			uid: tuid,
-			sid: "connector-server-2"
-		}]);
+    console.log(msg.stage);
+    if(msg.stage=='black'){
+        console.log("enter black")
+        var userlist=roomList.getBlackUserList(msg.rid,msg.action);
+
+        console.log(userlist.length)
+        for(var i=0;i<userlist.length;i++){
+            var tuid = userlist[i] + '*room';
+            channelService.pushMessageByUids('onSend', param, [{
+                uid: tuid,
+                sid: "connector-server-2"
+            }]);
+        }
+        next(null);
+    }else {
+        console.log("意外")
+        var userlist = roomList.getUserList(msg.rid);
+        for (var i = 0; i < userlist.length; i++) {
+            var tuid = userlist[i] + '*room';
+            channelService.pushMessageByUids('onSend', param, [
+                {
+                    uid: tuid,
+                    sid: "connector-server-2"
+                }
+            ]);
+        }
+        next(null);
     }
-	next(null);
 };
 
 handler.chooseRoom=function(msg, session, next){

@@ -1,4 +1,4 @@
-var routerApp = angular.module('routerApp', ['ui.router','MyController','MyServices','MyDirective']);
+var routerApp = angular.module('routerApp', ['ui.router','MyController','MyServices','MyDirective','ui.bootstrap']);
 var pomelo=window.pomelo;
 
 routerApp.run(function($rootScope, $state, $stateParams,$location) {
@@ -88,5 +88,21 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: 'tpls/gamedesk.html'
 
 
+        })
+        .state('gameDesk.all', {
+            url: '/all',
+            views: {
+                '': {
+                    templateUrl: 'tpls/all.html'
+                }
+            }
+        })
+        .state('gameDesk.friend', {
+            url: '/friend',
+            views: {
+                '': {
+                    templateUrl: 'tpls/friend.html'
+                }
+            }
         })
 });
