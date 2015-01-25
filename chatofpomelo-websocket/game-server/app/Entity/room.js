@@ -1,13 +1,119 @@
 var roomlist= [
-    { id:0, roomowner: "",police:[],farmer:[],killer:[],remain:"",num:0,messgae:[],states:"等待中",user:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]},
-    { id:1, roomowner: "",police:[],farmer:[],killer:[],remain:"",num:0,messgae:[],states:"等待中",user:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]},
-    { id:2, roomowner: "",police:[],farmer:[],killer:[],remain:"",num:0,messgae:[], states:"等待中",user:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]},
-    { id:3, roomowner: "",police:[],farmer:[],killer:[],remain:"",num:0,messgae:[],states:"等待中",user:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]},
-    { id:4, roomowner: "",police:[],farmer:[],killer:[],remain:"", num:0,messgae:[],states:"等待中",user:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]},
-    { id:5, roomowner: "",police:[],farmer:[],killer:[],remain:"",num:0,messgae:[],states:"等待中",user:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]},
-    { id:6, roomowner: "",police:[],farmer:[],killer:[],remain:"",num:0,messgae:[],states:"等待中",user:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]},
-    { id:7, roomowner: "",police:[],farmer:[],killer:[],remain:"",num:0,messgae:[],states:"等待中",user:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]}
+    { id:0, roomowner: "",policeChoose:[],killerChose:[],police:[],farmer:[],killer:[],remain:"",num:0,messgae:[],states:"等待中",user:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]},
+    { id:1, roomowner: "",policeChoose:[],killerChose:[],police:[],farmer:[],killer:[],remain:"",num:0,messgae:[],states:"等待中",user:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]},
+    { id:2, roomowner: "",policeChoose:[],killerChose:[],police:[],farmer:[],killer:[],remain:"",num:0,messgae:[], states:"等待中",user:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]},
+    { id:3, roomowner: "",policeChoose:[],killerChose:[],police:[],farmer:[],killer:[],remain:"",num:0,messgae:[],states:"等待中",user:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]},
+    { id:4, roomowner: "",policeChoose:[],killerChose:[],police:[],farmer:[],killer:[],remain:"", num:0,messgae:[],states:"等待中",user:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]},
+    { id:5, roomowner: "",policeChoose:[],killerChose:[],police:[],farmer:[],killer:[],remain:"",num:0,messgae:[],states:"等待中",user:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]},
+    { id:6, roomowner: "",policeChoose:[],killerChose:[],police:[],farmer:[],killer:[],remain:"",num:0,messgae:[],states:"等待中",user:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]},
+    { id:7, roomowner: "",policeChoose:[],killerChose:[],police:[],farmer:[],killer:[],remain:"",num:0,messgae:[],states:"等待中",user:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]}
 ]
+
+exports.getLightTip=function(id){
+    var len=roomlist[id].policeChoose.length;
+    var lens=roomlist[id].killerChose.length;
+    var message={
+        policeTip:"",
+        beKilled:"",
+        killAction:'',
+        policeAction:''
+    }
+    if(len==1){
+        message.policeTip=roomlist[id].policeChoose[0].bechoose;
+
+    }
+    if(len==2){
+          if(roomlist[id].policeChoose[0].bechoose==roomlist[id].policeChoose[1].bechoose){
+              message.policeTip=roomlist[id].policeChoose[0].bechoose;
+          }
+
+
+    }
+    if(len==3){
+        if(roomlist[id].policeChoose[0].bechoose==roomlist[id].policeChoose[1].bechoose||roomlist[id].policeChoose[0].bechoose==roomlist[id].policeChoose[2].bechoose){
+            message.policeTip=roomlist[id].policeChoose[0].bechoose;
+        }
+        if(roomlist[id].policeChoose[1].bechoose==roomlist[id].policeChoose[2].bechoose){
+            message.policeTip=roomlist[id].policeChoose[1].bechoose;
+        }
+
+    }
+    if(lens==1){
+        message.beKilled=roomlist[id].killerChose[0].bechoose;
+    }
+    if(lens==2){
+        if(roomlist[id].killerChose[0].bechoose==roomlist[id].killerChose[1].bechoose){
+            message.beKilled=roomlist[id].killerChose[0].bechoose;
+        }
+
+
+    }
+    if(lens==3){
+        if(roomlist[id].killerChose[0].bechoose==roomlist[id].killerChose[1].bechoose||roomlist[id].killerChose[0].bechoose==roomlist[id].killerChose[2].bechoose){
+            message.beKilled=roomlist[id].killerChose[0].bechoose;
+        }
+        if(roomlist[id].killerChose[1].bechoose==roomlist[id].killerChose[2].bechoose){
+            message.beKilled=roomlist[id].killerChose[1].bechoose;
+        }
+
+    }
+    message.killAction=getActionByName(id,message.beKilled)
+    message.policeAction=getActionByName(id,message.policeTip)
+    console.log("-----------"+message);
+    return message;
+}
+
+function getActionByName(rid,name){
+    var action="";
+    var user=roomlist[rid].user;
+    for(var i=0;i<20;i++){
+        if(user[i].name==name){
+            action=user[i].action;
+            break;
+        }
+    }
+
+
+
+    return action;
+}
+
+
+exports.setPoliceChoose=function(id,username,whochoose){
+    var len=roomlist[id].policeChoose.length;
+
+    for(var i=0;i<len;i++){
+        if(roomlist[id].policeChoose[i].whochoose==whochoose){
+            roomlist[id].policeChoose[i].bechoose=username;
+            return roomlist[id].policeChoose;
+        }
+    }
+    roomlist[id].policeChoose.push({
+        whochoose:whochoose,
+        bechoose:username
+    });
+
+
+    return roomlist[id].policeChoose;
+}
+exports.setKillerChoose=function(id,username,whochoose){
+    var len=roomlist[id].killerChose.length;
+
+    for(var i=0;i<len;i++){
+        if(roomlist[id].killerChose[i].whochoose==whochoose){
+            roomlist[id].killerChose[i].bechoose=username;
+            return roomlist[id].killerChose;
+        }
+    }
+
+
+
+    roomlist[id].killerChose.push({
+        whochoose:whochoose,
+        bechoose:username
+    });
+    return roomlist[id].killerChose;
+}
 exports.getBlackUserList=function(id,action){
 
     if(action=='警察'){
@@ -19,7 +125,6 @@ exports.getBlackUserList=function(id,action){
     if(action=='平民'){
         var toReturn=roomlist[id].farmer;
     }
-    console.log(toReturn+"同他人turn");
     return toReturn;
 }
 
@@ -64,7 +169,8 @@ exports.addUser=function(id,username){
         name:username,
         ready:false,
         position:-1,
-        action:""
+        action:"",
+        alive:false
     }
     for(var i=0;i<20;i++){
         if(!roomlist[id].user[i].name){
@@ -101,15 +207,17 @@ exports.unReady=function(id,username){
 }
 
 exports.doStart=function(id){
+
+
     roomlist[id].states="游戏中";
     var user=roomlist[id].user;
     for(var i=0;i<20;i++){
         if(user[i].ready)
         user[i].ready=false;
+        user[i].alive=true;
     }
     var remain=doAction(roomlist[id].num,user,id)
     roomlist[id].remain=remain;
-    console.log("========================remain"+remain);
 return roomlist[id];
 }
 
@@ -140,7 +248,8 @@ if(num<8){
         }
     }
     actionList.sort(function(a,b){ return Math.random()>.5 ? -1 : 1;});
-
+    actionList.sort(function(a,b){ return Math.random()>.5 ? -1 : 1;});
+    actionList.sort(function(a,b){ return Math.random()>.5 ? -1 : 1;});
     for(var i=0;i<num;i++){
 
 

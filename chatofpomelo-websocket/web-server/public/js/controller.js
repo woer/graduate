@@ -109,7 +109,12 @@ myController.controller('roomListCtrl',['$rootScope','$scope','$location','roomL
 myController.controller('userListCtrl',['$timeout','$rootScope','$scope','$location','roomListService',function($timeout,$rootScope,$scope,$location,roomListService){
     var pomelo=$rootScope.pomelo;
      var rid=roomListService.rid;
+    $scope.tips=[];
+    $scope.privatemessages=[];
     $scope.stage='';
+    $scope.police='警察';
+    $scope.killer='杀手';
+    $scope.farmer='平民';
     $scope.width=100;
     $scope.text='天黑了，杀手出来杀人吧'
     $scope.textShow=false;
@@ -117,7 +122,11 @@ myController.controller('userListCtrl',['$timeout','$rootScope','$scope','$locat
     $scope.myType='info'
     $scope.roomlist=null;
     $scope.myaction="";
+    $scope.priChannel=false;
     $scope.remain='';
+    $scope.policelightMessage="";
+    $scope.lightMessage='';
+    $scope.gameStart=false;
     $scope.start=true;
     $scope.toReady=true;
     $scope.dounReady=false;
@@ -139,7 +148,14 @@ myController.controller('userListCtrl',['$timeout','$rootScope','$scope','$locat
         $scope.start = true;
         $scope.$apply();
 
+    });
+
+    pomelo.on('onTip',function(data){
+        $scope.tips=data.tips;
+        $scope.$apply();
     })
+
+
     pomelo.on("onSend",function(data){
         console.log("onSend"+roomListService.roomlist)
         $scope.send="";
@@ -185,11 +201,32 @@ myController.controller('userListCtrl',['$timeout','$rootScope','$scope','$locat
         })
     }
 
-    function timer(){
+    function light(){
+        var route = "chat.chatHandler.doLight";
+        roomListService.roomRequest(route,{
+            rid:rid
+        },function(){
+        })
+
+
+
+
+    }
+
+
+    function timer(states){
         var tim=setInterval(function(){
-            console.log($scope.width)
             $scope.width=$scope.width-2;
             if($scope.width==0){
+                if(states=='black'){
+                    $scope.back=true;
+                    $scope.tips=[];
+                    if($scope.roomowner==$scope.username){
+                        light();
+                    }
+                }else{
+                    alert("天黑了")
+                }
                 clearInterval(tim)
             }
             if($scope.width<50&&$scope.width>15){
@@ -202,25 +239,58 @@ myController.controller('userListCtrl',['$timeout','$rootScope','$scope','$locat
 
         },1000);
     }
+    pomelo.on('doLight',function(data){
+        $scope.stage='white'
+        console.log(data.message);
+        $scope.textShow=true;
+        $scope.text='天亮了，选出你所认为的杀手吧'
+        $timeout(function(){
+            $scope.textShow=false;
+        },3000);
+        $scope.lightMessage="("+data.message.beKilled+")被杀死了：他的身份是-->"+data.message.killAction;
+       if(data.message.beKilled.length==0){
+           $scope.lightMessage="";
+       }
+
+        if($scope.myaction=='警察'){
+            $scope.policelightMessage="你验证的（"+data.message.policeTip+"）的身份是-->"+data.message.policeAction;
+        }
+        if(data.message.policeTip.length==0){
+            $scope.policelightMessage="";
+        }
+
+        $scope.width=100;
+        timer($scope.stage);
+        $scope.$apply();
+
+    })
+
+
+
 
 
     pomelo.on("doStart",function(data){
-        timer();
+
         $scope.textShow=true;
         $timeout(function(){
             $scope.textShow=false;
         },3000);
         $scope.stage='black';
+        timer($scope.stage);
         $scope.toReady=false;
         $scope.dounReady=false;
         $scope.users=data.roomList.user;
-
+        $scope.gameStart=true;
         $scope.remain=data.roomList.remain;
         $scope.back=false;
         var users=$scope.users;
         for(var i=0;i<20;i++){
             if(users[i].name==$scope.username){
                      $scope.myaction=users[i].action;
+                if(users[i].action=='警察'||users[i].action=='杀手'){
+                    $scope.priChannel=true;
+                }
+
             }
 
         }
@@ -228,7 +298,14 @@ myController.controller('userListCtrl',['$timeout','$rootScope','$scope','$locat
 
     })
 
+    pomelo.on("onPriSend",function(data){
+        $scope.privatemessages.push({
+            username:data.username,
+            message:data.message
+        });
+        $rootScope.$apply();
 
+    })
     pomelo.on("onReady",function(data){
         console.dir(roomListService);
         console.log("onReady"+roomListService.roomlist)

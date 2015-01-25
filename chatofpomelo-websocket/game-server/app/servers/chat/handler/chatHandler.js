@@ -9,31 +9,61 @@ var Handler = function(app) {
 };
 
 var handler = Handler.prototype;
+handler.priSend=function(msg, session, next){
+    var channelService = this.app.get('channelService');
+    var param = {
+        message: msg.message,
+        username:msg.user
+    };
+    var userlist = roomList.getBlackUserList(msg.rid,msg.action);
+    for (var i = 0; i < userlist.length; i++) {
+        var tuid = userlist[i] + '*room';
+        channelService.pushMessageByUids('onPriSend', param, [
+            {
+                uid: tuid,
+                sid: "connector-server-2"
+            }
+        ]);
+    }
+    next(null);
+
+}
+handler.toChoose=function(msg, session, next){
+    console.log(msg.beChooseName+"===========被选择的人的名字");
+    var channelService = this.app.get('channelService');
+
+    if(msg.myaction=='警察'){
+        var userlist = roomList.getBlackUserList(msg.rid,msg.action);
+        var re=roomList.setPoliceChoose(msg.rid,msg.beChooseName,msg.chooseName)
+    }
+    if(msg.myaction=='杀手'){
+        var userlist = roomList.getBlackUserList(msg.rid,msg.action);
+        var re=roomList.setKillerChoose(msg.rid,msg.beChooseName,msg.chooseName)
+    }
+    var param = {
+        tips:re
+    };
+    for (var i = 0; i < userlist.length; i++) {
+        var tuid = userlist[i] + '*room';
+        channelService.pushMessageByUids('onTip', param, [
+            {
+                uid: tuid,
+                sid: "connector-server-2"
+            }
+        ]);
+    }
+    next(null);
 
 
+
+
+}
 handler.send = function(msg, session, next) {
 	var channelService = this.app.get('channelService');
-
     var message=roomList.pushMessage(msg.rid,msg.message,msg.user);
 	var param = {
         message: message
 	};
-    console.log(msg.stage);
-    if(msg.stage=='black'){
-        console.log("enter black")
-        var userlist=roomList.getBlackUserList(msg.rid,msg.action);
-
-        console.log(userlist.length)
-        for(var i=0;i<userlist.length;i++){
-            var tuid = userlist[i] + '*room';
-            channelService.pushMessageByUids('onSend', param, [{
-                uid: tuid,
-                sid: "connector-server-2"
-            }]);
-        }
-        next(null);
-    }else {
-        console.log("意外")
         var userlist = roomList.getUserList(msg.rid);
         for (var i = 0; i < userlist.length; i++) {
             var tuid = userlist[i] + '*room';
@@ -45,7 +75,7 @@ handler.send = function(msg, session, next) {
             ]);
         }
         next(null);
-    }
+
 };
 
 handler.chooseRoom=function(msg, session, next){
@@ -127,7 +157,28 @@ handler.unReady=function(msg, session, next){
     }
     next(null);
 }
+handler.doLight=function(msg, session, next){
+    var channelService = this.app.get('channelService');
+    var channel = channelService.getChannel('room', false);
+    var message=roomList.getLightTip(msg.rid);
+    var param = {
+        message: message
+    };
+    var userlist=roomList.getUserList(msg.rid);
+    for(var i=0;i<userlist.length;i++){
+        var tuid = userlist[i] + '*room';
+        channelService.pushMessageByUids('doLight', param, [{
+            uid: tuid,
+            sid: "connector-server-2"
+        }]);
+    }
+    next(null);
 
+
+
+
+
+}
 
 
 

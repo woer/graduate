@@ -32,6 +32,7 @@ MyDirective.directive('user',['roomListService',function(roomListService) {
     return {
         restrict : 'EA',
         scope:{
+            alive : '=',
             name : '=',
             position : '=',
             ready : '=',
@@ -51,9 +52,26 @@ MyDirective.directive('user',['roomListService',function(roomListService) {
             + '</div>',
         link:function(scope, element, attrs){
             scope.farmer='平民';
-            console.log(scope.username+"=="+scope.stage+"="+scope.action+"==="+scope.myaction)
+            console.dir("======"+element)
             element.bind( "click", function() {
-                     alert("xx")
+                if(scope.stage=='black'&&scope.myaction=='平民'){
+                    return;
+                }
+
+
+
+                var route = "chat.chatHandler.toChoose";
+                var data={
+                    action:scope.myaction,
+                    myaction:scope.myaction,
+                    stage:scope.stage,
+                   beChooseName:scope.name,
+                    rid:roomListService.rid,
+                    chooseName:roomListService.username
+                }
+                roomListService.roomRequest(route,data,function(){
+                    element.val("")
+                })
 
         });
 }
@@ -87,9 +105,33 @@ MyDirective.directive('send',['roomListService',function(roomListService) {
     }
 
 }])
+MyDirective.directive('prisend',['roomListService',function(roomListService) {
+    return{
+        restrict : 'EACM',
+        link:function(scope, element, attrs){
+            element.bind("keydown",function(event){
+
+                if(event.which==13){
+                    if(element.val().length){
+                        var route = "chat.chatHandler.priSend";
+                        var data={
+                            action:scope.myaction,
+                            message:element.val(),
+                            rid:roomListService.rid,
+                            user:roomListService.username
+                        }
+                        roomListService.roomRequest(route,data,function(){
+                            element.val("")
+                        })
+                    }
+                }
+            })
+        }
 
 
+    }
 
+}])
 
 
 

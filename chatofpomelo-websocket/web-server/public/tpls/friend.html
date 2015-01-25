@@ -1,3 +1,5 @@
 <div class="talkMessage">
-    <div ng-repeat='mess in messages'><div >
-        <span class="badge" style="background-color: lightcoral">{{mess.username}}:</span><span class="badge text-center" style="background-color: #c0c0c0">{{mess.messgae}}</span></div></div></div><input send  class="input-lg" style="height: 40px;width: 90%;background-color: #fff" type="text" ng-model="send" placeholder="队友频道-输入对话。。。。">
+    <h4 class="text-center">队友频道</h4>
+    <div ng-repeat='mess in privatemessages'><div >
+        <span class="badge" style="background-color: lightcoral">{{mess.username}}:</span><span class="badge text-center" style="background-color: #c0c0c0">{{mess.message}}</span>
+    </div></div></div><input prisend  class="input-lg" style="height: 40px;width: 90%;background-color: #fff" type="text" ng-model="send" placeholder="队友频道-输入对话。。。。">
