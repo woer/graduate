@@ -59,7 +59,7 @@ exports.getLightTip=function(id){
     }
     message.killAction=getActionByName(id,message.beKilled)
     message.policeAction=getActionByName(id,message.policeTip)
-    console.log("-----------"+message);
+    killOneByName(id,message.beKilled);
     return message;
 }
 
@@ -73,10 +73,20 @@ function getActionByName(rid,name){
         }
     }
 
-
-
     return action;
 }
+function killOneByName(id,name){
+    var user=roomlist[id].user
+    for(var i=0;i<20;i++){
+        if(user[i].name==name){
+             user[i].alive=false;
+        }
+    }
+
+
+
+}
+
 
 
 exports.setPoliceChoose=function(id,username,whochoose){
@@ -170,7 +180,10 @@ exports.addUser=function(id,username){
         ready:false,
         position:-1,
         action:"",
-        alive:false
+        alive:false,
+        lastWord:"",
+        beVote:0,
+        voteWho:""
     }
     for(var i=0;i<20;i++){
         if(!roomlist[id].user[i].name){
@@ -222,9 +235,6 @@ return roomlist[id];
 }
 
 function doAction(num,user,id){
-    console.log(user)
-
-    console.log(user)
 if(num<8){
     var x=1;
     var actionList=['警察','杀手'];

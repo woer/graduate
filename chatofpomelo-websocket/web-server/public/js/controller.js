@@ -115,7 +115,7 @@ myController.controller('userListCtrl',['$timeout','$rootScope','$scope','$locat
     $scope.police='警察';
     $scope.killer='杀手';
     $scope.farmer='平民';
-    $scope.width=100;
+    $scope.width=50;
     $scope.text='天黑了，杀手出来杀人吧'
     $scope.textShow=false;
     $scope.back=true;
@@ -139,7 +139,7 @@ myController.controller('userListCtrl',['$timeout','$rootScope','$scope','$locat
     });
     pomelo.on("onChoose",function(data){
         roomListService.roomlist=$scope.roomlist=data.roomList;
-        console.log("onChoose"+roomListService.roomlist)
+        console.dir(roomListService.roomlist)
         $scope.toReady=true;
         $scope.dounReady=false;
         $scope.users=data.roomList[rid].user;
@@ -224,8 +224,11 @@ myController.controller('userListCtrl',['$timeout','$rootScope','$scope','$locat
                     if($scope.roomowner==$scope.username){
                         light();
                     }
+                    $scope.$apply();
                 }else{
-                    alert("天黑了")
+                    $scope.back=false;
+                    $scope.$apply();
+
                 }
                 clearInterval(tim)
             }
@@ -240,20 +243,24 @@ myController.controller('userListCtrl',['$timeout','$rootScope','$scope','$locat
         },1000);
     }
     pomelo.on('doLight',function(data){
+        console.log(data.user);
+        $scope.users=data.user;
+        $scope.tips=[];
+        $scope.back=true;
         $scope.stage='white'
-        console.log(data.message);
+
         $scope.textShow=true;
         $scope.text='天亮了，选出你所认为的杀手吧'
         $timeout(function(){
             $scope.textShow=false;
         },3000);
-        $scope.lightMessage="("+data.message.beKilled+")被杀死了：他的身份是-->"+data.message.killAction;
+        $scope.lightMessage="("+data.message.beKilled+")被杀了：身份-->"+data.message.killAction;
        if(data.message.beKilled.length==0){
            $scope.lightMessage="";
        }
 
         if($scope.myaction=='警察'){
-            $scope.policelightMessage="你验证的（"+data.message.policeTip+"）的身份是-->"+data.message.policeAction;
+            $scope.policelightMessage="验证（"+data.message.policeTip+"）的身份-->"+data.message.policeAction;
         }
         if(data.message.policeTip.length==0){
             $scope.policelightMessage="";

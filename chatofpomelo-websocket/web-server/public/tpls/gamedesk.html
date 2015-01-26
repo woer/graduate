@@ -1,8 +1,7 @@
 <div ng-class="{true: 'white', false: 'black'}[back]" ng-controller="userListCtrl" >
 <div ng-show="textShow" class="textShow">{{text}}</div>
 <div class="gamedesk">
-
-    <user ng-repeat='user in users' name="user.name" ready="user.ready" position="user.position" alive="user.alive" stage="stage" username="username" action="user.action" myaction="myaction">
+    <user ng-repeat='user in users' name="user.name" ready="user.ready" position="user.position"   alive="user.alive" stage="stage" username="username" action="user.action" myaction="myaction" bevote="user.beVote"  votewho="user.voteWho">
     </user>
 
     <div class="buttons">

@@ -162,6 +162,25 @@ handler.doLight=function(msg, session, next){
     var channel = channelService.getChannel('room', false);
     var message=roomList.getLightTip(msg.rid);
     var param = {
+        message: message,
+        user:roomList.getRoomList()[msg.rid].user
+    };
+    var userlist=roomList.getUserList(msg.rid);
+    for(var i=0;i<userlist.length;i++){
+        var tuid = userlist[i] + '*room';
+        channelService.pushMessageByUids('doLight', param, [{
+            uid: tuid,
+            sid: "connector-server-2"
+        }]);
+    }
+    next(null);
+
+}
+handler.ChooseKill=function(msg, session, next){
+    var channelService = this.app.get('channelService');
+    var channel = channelService.getChannel('room', false);
+    var message=roomList.getLightTip();
+    var param = {
         message: message
     };
     var userlist=roomList.getUserList(msg.rid);
@@ -174,12 +193,7 @@ handler.doLight=function(msg, session, next){
     }
     next(null);
 
-
-
-
-
 }
-
 
 
 

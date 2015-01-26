@@ -40,26 +40,53 @@ MyDirective.directive('user',['roomListService',function(roomListService) {
             action:'=',
             username:'=',
             stage:'=',
-            myaction:'='
+            myaction:'=',
+            beVote : '=bevote',
+            voteWho : '=votewho'
         },
         template : '<div class="user text-center" ng-show="name">'
             + '<br><span class="badge">{{name}}</span><br><br>'
-            + '<span ><img src="img/19.png"></span><br><br>'
-            + '<span class="badge">{{position}}</span><br>'
+            + '<span ng-if="!action||alive" class="img"><img src={{pic}}></span>'
+            +'<span class="lastWord" ng-if="!alive&&action">遗言：</span><br><br>'
+            + '<span ng-if="beVote" class="beVote badge" style="background-color: #5f9ea0">{{beVote}}</span>'
+            + '<span ng-if="voteWho" class="voteWho">投{{voteWho}}</span>'
+          +'<div class="rela">'
+            + '<br><span class="badge">{{position}}</span><br>'
             + '<span class="badge" ng-show="ready" >ready</span><br>'
             + '<span class="badge" ng-if="action==myaction&&action!=farmer">{{action}}</span><br>'
             + '<span class="badge" ng-show="death" >death</span><br>'
-            + '</div>',
+            + '</div></div>',
         link:function(scope, element, attrs){
+
             scope.farmer='平民';
-            console.dir("======"+element)
+            var pic=(scope.position+100)
+            if(pic>110){
+                pic=99;
+            }
+            pic=parseInt(pic);
+            scope.pic="img/"+pic+".png";
+
+            console.log("======"+element)
             element.bind( "click", function() {
                 if(scope.stage=='black'&&scope.myaction=='平民'){
                     return;
                 }
-
-
-
+                if(scope.stage=='white'&&scope.action){
+                    var route = "chat.chatHandler.ChooseKill";
+                    var data={
+                        action:scope.myaction,
+                        myaction:scope.myaction,
+                        stage:scope.stage,
+                        beChooseName:scope.name,
+                        rid:roomListService.rid,
+                        chooseName:roomListService.username
+                    }
+                    roomListService.roomRequest(route,data,function(){
+                        element.val("")
+                    })
+                    return;
+                }
+                if(scope.stage=='black'&&scope.myaction!='平民'){
                 var route = "chat.chatHandler.toChoose";
                 var data={
                     action:scope.myaction,
@@ -72,7 +99,8 @@ MyDirective.directive('user',['roomListService',function(roomListService) {
                 roomListService.roomRequest(route,data,function(){
                     element.val("")
                 })
-
+                    return;
+                }
         });
 }
 }
