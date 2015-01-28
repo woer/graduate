@@ -1,9 +1,8 @@
 <div ng-class="{true: 'white', false: 'black'}[back]" ng-controller="userListCtrl" >
 <div ng-show="textShow" class="textShow">{{text}}</div>
 <div class="gamedesk">
-    <user ng-repeat='user in users' name="user.name" ready="user.ready" position="user.position"   alive="user.alive" stage="stage" username="username" action="user.action" myaction="myaction" bevote="user.beVote"  votewho="user.voteWho">
+    <user ng-repeat='user in users' name="user.name" ready="user.ready" position="user.position" allvote="user.allVote"  alive="user.alive" stage="stage" username="username" lastword="user.lastWord" action="user.action" myaction="myaction" bypolicevote="user.byPoliceVote" bykillervote="user.byKillerVote"    votewho="user.voteWho" >
     </user>
-
     <div class="buttons">
     <div ng-if="roomowner==username"><button class="btn btn-primary btn-lg" ng-hide="start" ng-click="doStart()">开始</button></div>
     <div ng-if="roomowner!=username"><button class="btn btn-primary btn-lg" ng-click="doReady()" ng-show="toReady&&!gameStart">准备</button></div>
@@ -12,17 +11,12 @@
     <div class="badge" style="float: right;font-size: 28px;background-color: lightcoral;color: white">{{myaction}}</div>
 </div>
     <div class="talk">
-        <div class="inform text-center h5"><div class="text-center h4" style="color: red">信息板</div>
-        <div class="progress"> <progressbar value="width"  type="{{myType}}">{{width}}</progressbar></div>
-        {{remain}}
+        <div class="inform text-center h4"><div class="text-center h3" style="color: red">信息板</div><br>{{username}}<br>
+        警察：{{remain[0]}}   杀手：{{remain[1]}}  平民{{remain[2]}}
             <h4 ng-show="myaction==police&&!back">点击选取你想要验明身份的人</h4>
             <h4 ng-show="myaction==killer&&!back">点击选取你想要杀死的人</h4>
             <h4 ng-show="back&&gameStart">投票选择你认为是杀手的人</h4>
-            <h4>{{lightMessage}}</h4>
-            <h4>{{policelightMessage}}</h4>
-        <div ng-repeat="tip in tips">（{{tip.whochoose}}）<span ng-show="myaction==police&&!back">想要验（{{tip.bechoose}}）的身份</span><span ng-show="myaction==killer&&!back">想要杀死（{{tip.bechoose}}）</span></div>
-
-
+            <h4 ng-show="policeMessage&&myaction==police">{{policeMessage}}</h4>
     </div> <div style="margin: 0 auto"><ul class="nav nav-pills text-center" role="tablist" style="font-size: 20px">
         <li role="presentation"><a ui-sref="gameDesk.all"><button>公共频道</button></a></li>
         <li role="presentation"><a ui-sref="gameDesk.friend" ng-show="priChannel"><button>队友频道</button></a></li>

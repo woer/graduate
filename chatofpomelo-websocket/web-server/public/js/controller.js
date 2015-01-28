@@ -109,23 +109,22 @@ myController.controller('roomListCtrl',['$rootScope','$scope','$location','roomL
 myController.controller('userListCtrl',['$timeout','$rootScope','$scope','$location','roomListService',function($timeout,$rootScope,$scope,$location,roomListService){
     var pomelo=$rootScope.pomelo;
      var rid=roomListService.rid;
-    $scope.tips=[];
+    $scope.tips=[]
+    $scope.lastChoose="";
     $scope.privatemessages=[];
     $scope.stage='';
     $scope.police='警察';
     $scope.killer='杀手';
     $scope.farmer='平民';
-    $scope.width=50;
+
     $scope.text='天黑了，杀手出来杀人吧'
     $scope.textShow=false;
     $scope.back=true;
-    $scope.myType='info'
     $scope.roomlist=null;
     $scope.myaction="";
     $scope.priChannel=false;
     $scope.remain='';
-    $scope.policelightMessage="";
-    $scope.lightMessage='';
+    $scope.policeMessage="";
     $scope.gameStart=false;
     $scope.start=true;
     $scope.toReady=true;
@@ -151,7 +150,18 @@ myController.controller('userListCtrl',['$timeout','$rootScope','$scope','$locat
     });
 
     pomelo.on('onTip',function(data){
+      if(data.lastChoose.position||data.lastChoose.position==0){
+          var lastVoted=data.lastChoose;
+          $scope.users[lastVoted.position].byPoliceVote=lastVoted.PoliceChoosed;
+          $scope.users[lastVoted.position].byKillerVote=lastVoted.KillerChoosed;
+          $scope.$apply();
+      }
+        var toVote=data.voteWho;
+        var beVote=data.beVoted;
         $scope.tips=data.tips;
+        $scope.users[toVote.position].voteWho=toVote.choosewho;
+        $scope.users[beVote.position].byPoliceVote=beVote.PoliceChoosed;
+        $scope.users[beVote.position].byKillerVote=beVote.KillerChoosed;
         $scope.$apply();
     })
 
@@ -215,36 +225,40 @@ myController.controller('userListCtrl',['$timeout','$rootScope','$scope','$locat
 
 
     function timer(states){
-        var tim=setInterval(function(){
-            $scope.width=$scope.width-2;
-            if($scope.width==0){
-                if(states=='black'){
-                    $scope.back=true;
-                    $scope.tips=[];
-                    if($scope.roomowner==$scope.username){
+        var tim=$timeout(function(){
+                  if(states=='black'){
+
                         light();
-                    }
-                    $scope.$apply();
+
                 }else{
-                    $scope.back=false;
-                    $scope.$apply();
-
+                        black();
                 }
-                clearInterval(tim)
-            }
-            if($scope.width<50&&$scope.width>15){
-                $scope.myType='warning'
-            }
-            if($scope.width<15){
-                $scope.myType='danger'
-            }
-            $scope.$apply();
-
-        },1000);
+        },10000);
     }
+    function black(){
+        var route = "chat.chatHandler.doBlack";
+        roomListService.roomRequest(route,{
+            rid:rid
+        },function(){
+        })
+    }
+
+
+
     pomelo.on('doLight',function(data){
-        console.log(data.user);
+        if(data.gameover){
+            gameover(data);
+            return;
+        }
+
+        $scope.policeMessage=data.message;
+        console.log(data.message);
+        $scope.remain=data.remain;
+        roomListService.lastchoose = ""
+        roomListService.lastChoose=null;
         $scope.users=data.user;
+        var posi=roomListService.myposition
+        roomListService.myalive=data.user[posi].alive;
         $scope.tips=[];
         $scope.back=true;
         $scope.stage='white'
@@ -254,39 +268,102 @@ myController.controller('userListCtrl',['$timeout','$rootScope','$scope','$locat
         $timeout(function(){
             $scope.textShow=false;
         },3000);
-        $scope.lightMessage="("+data.message.beKilled+")被杀了：身份-->"+data.message.killAction;
-       if(data.message.beKilled.length==0){
-           $scope.lightMessage="";
-       }
 
-        if($scope.myaction=='警察'){
-            $scope.policelightMessage="验证（"+data.message.policeTip+"）的身份-->"+data.message.policeAction;
+        if($scope.roomowner==$scope.username) {
+            timer($scope.stage);
         }
-        if(data.message.policeTip.length==0){
-            $scope.policelightMessage="";
-        }
-
-        $scope.width=100;
-        timer($scope.stage);
         $scope.$apply();
 
+    })
+
+    function gameover(data){
+
+        $scope.users=data.user;
+        $scope.back=true;
+        $scope.remain='';
+        $scope.policeMessage="";
+        $scope.gameStart=false;
+        $scope.start=true;
+        $scope.toReady=true;
+        $scope.dounReady=false;
+        $scope.myaction="";
+       roomListService.lastchoose="";
+        roomListService.message=null;
+        roomListService.myalive=true
+        ;roomListService.lastworded=false;
+
+
+
+
+
+        $scope.$apply();
+    }
+
+    pomelo.on("doBlock",function(data){
+        if(data.gameover){
+            gameover(data);
+            return;
+        }
+        $scope.remain=data.remain;
+        var posi=roomListService.myposition
+        roomListService.myalive=data.user[posi].alive;
+        roomListService.lastchoose = ""
+        roomListService.lastChoose=null;
+        $scope.back=false;
+        $scope.users=data.user;
+        $scope.stage='black'
+        $scope.textShow=true;
+        $scope.text='天黑了，杀手出来杀人吧'
+        $timeout(function(){
+            $scope.textShow=false;
+        },3000);
+        if($scope.roomowner==$scope.username) {
+            timer($scope.stage);
+        }
+        $scope.$apply();
     })
 
 
 
 
+    pomelo.on("doKill",function(data){
+        $scope.users=data.user;
+        $scope.$apply();
+
+    })
+
+
+pomelo.on("lastword",function(data){
+    console.log(data.message)
+    if($scope.username==data.name){
+        roomListService,lastworded=true;
+    }
+
+    $scope.users[data.message.position].lastWord=data.message.word;
+
+    $scope.$apply();
+})
+
 
     pomelo.on("doStart",function(data){
-
+        roomListService.myalive=true;
+        $scope.users=data.roomList.user;
+    for(var i=0;i<20;i++){
+        if(data.roomList.user[i]&&data.roomList.user[i].name==roomListService.username){
+            roomListService.myposition=i;
+        }
+    }
         $scope.textShow=true;
         $timeout(function(){
             $scope.textShow=false;
         },3000);
         $scope.stage='black';
-        timer($scope.stage);
+        if($scope.roomowner==$scope.username) {
+            timer($scope.stage);
+        }
         $scope.toReady=false;
         $scope.dounReady=false;
-        $scope.users=data.roomList.user;
+
         $scope.gameStart=true;
         $scope.remain=data.roomList.remain;
         $scope.back=false;

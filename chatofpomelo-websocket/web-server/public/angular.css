@@ -137,7 +137,7 @@ margin-top: 10px;
 }
 .user:hover{
 
-    border: solid 1px #aaa;
+    border: solid 2px;
 }
 
 .buttons{
@@ -168,7 +168,7 @@ overflow: auto;
 }
 .inform{
     width: 90%;
-    height: 200px;
+    height: 170px;
     border: solid 1px ;
   background-color: white;
 }
@@ -185,36 +185,37 @@ overflow: auto;
     position: absolute;
     top:200px;
     left:350px;
-    color: #ffff00;
+    color: red;
 }
 .progress{
     margin-bottom:10px;
 }
 .lastWord{
-    width:78px;
-    height:109px;
-    background-color: red;
+    width:95px;
+    height:91px;
+    background-color: #fff;
+    display: block;
+
 }
 
 .beVote{
     color: red;
     position: relative;
     z-index: 999;
-top:-80px;
-    left:26px;
+    font-size: 15px;
 }
 .voteWho{
     color: red;
     position: relative;
     z-index: 999;
-    top:-150px;
-    left:26px;
-}
-.rela{
-    position: relative;
-    top:-30px;
+    top:50px;
+    left:20px;
+    font-size: 18px;
 }
 
+.imgs{
+    float: left;
+}
 
 
 

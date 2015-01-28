@@ -1,4 +1,4 @@
-var roomList= require('../../../entity/room');
+var roomList= require('../../../entity/rooms');
 module.exports = function(app) {
 	return new ChatRemote(app);
 };
