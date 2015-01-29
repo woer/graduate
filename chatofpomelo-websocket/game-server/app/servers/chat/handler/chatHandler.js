@@ -223,7 +223,8 @@ handler.doLight=function(msg, session, next){
         message: x,
         user:roomList.getRoomList()[msg.rid].user,
         remain:roomList.getRoomList()[msg.rid].remain,
-        gameover:over
+        gameover:over,
+        win:over
     };
 console.dir(param.user);
     var userlist=roomList.getUserList(msg.rid);
@@ -238,6 +239,29 @@ console.dir(param.user);
     next(null);
 
 }
+handler.doReturn=function(msg, session, next){
+    var roomlist=roomList.doReturn(msg.rid,msg.name);
+    var channelService = this.app.get('channelService');
+    var channel = channelService.getChannel('room', false);
+    var param = {
+        roomlist: roomlist
+    };
+    var userlist=roomList.getUserList(msg.rid);
+    for(var i=0;i<userlist.length;i++){
+        var tuid = userlist[i] + '*room';
+        channelService.pushMessageByUids('doReturn', param, [{
+            uid: tuid,
+            sid: "connector-server-2"
+        }]);
+    }
+    next(null,{
+        roomlist:roomList.getRoomList()
+    });
+
+
+
+}
+
 handler.ChooseKill=function(msg, session, next){
     console.log("choosekill")
     if(msg.lastChoose){
@@ -271,11 +295,11 @@ if(name){
 
     roomList.resetUser(msg.rid);
     var over=roomList.gameover(msg.rid)
-    console.log("00000000"+over)
     var param = {
         user:roomList.getRoomList()[msg.rid].user,
         remain:roomList.getRoomList()[msg.rid].remain,
-        gameover:over
+        gameover:over,
+        win:over
     };
     console.dir(param.user);
     var userlist=roomList.getUserList(msg.rid);

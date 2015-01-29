@@ -1,18 +1,19 @@
 <div ng-class="{true: 'white', false: 'black'}[back]" ng-controller="userListCtrl" >
 <div ng-show="textShow" class="textShow">{{text}}</div>
 <div class="gamedesk">
-    <user ng-repeat='user in users' name="user.name" ready="user.ready" position="user.position" allvote="user.allVote"  alive="user.alive" stage="stage" username="username" lastword="user.lastWord" action="user.action" myaction="myaction" bypolicevote="user.byPoliceVote" bykillervote="user.byKillerVote"    votewho="user.voteWho" >
+    <user ng-repeat='user in users' name="user.name" roomowner="roomowner" ready="user.ready" position="user.position" allvote="user.allVote"  alive="user.alive" stage="stage" username="username" lastword="user.lastWord" action="user.action" myaction="myaction" bypolicevote="user.byPoliceVote" bykillervote="user.byKillerVote"    votewho="user.voteWho" >
     </user>
     <div class="buttons">
-    <div ng-if="roomowner==username"><button class="btn btn-primary btn-lg" ng-hide="start" ng-click="doStart()">开始</button></div>
-    <div ng-if="roomowner!=username"><button class="btn btn-primary btn-lg" ng-click="doReady()" ng-show="toReady&&!gameStart">准备</button></div>
-    <div ng-if="roomowner!=username"><button class="btn btn-primary btn-lg" ng-click="unReady()" ng-show="dounReady&&!gameStart">取消准备</button></div>
+    <span ng-if="roomowner==username"><button class="btn btn-primary btn-lg" ng-hide="start" ng-click="doStart()">开始</button></span>
+    <span ng-if="roomowner!=username"><button class="btn btn-primary btn-lg" ng-click="doReady()" ng-show="toReady&&!gameStart">准备</button></span>
+    <span ng-if="roomowner!=username"><button class="btn btn-primary btn-lg" ng-click="unReady()" ng-show="dounReady&&!gameStart">取消准备</button></span>
+        <button class="btn btn-primary btn-lg" ng-click="return()" ng-show="!gameStart">返回</button>
         </div>
     <div class="badge" style="float: right;font-size: 28px;background-color: lightcoral;color: white">{{myaction}}</div>
 </div>
     <div class="talk">
         <div class="inform text-center h4"><div class="text-center h3" style="color: red">信息板</div><br>{{username}}<br>
-        警察：{{remain[0]}}   杀手：{{remain[1]}}  平民{{remain[2]}}
+        <div ng-show="gameStart">警察：{{remain[0]}}   杀手：{{remain[1]}}  平民{{remain[2]}}</div>
             <h4 ng-show="myaction==police&&!back">点击选取你想要验明身份的人</h4>
             <h4 ng-show="myaction==killer&&!back">点击选取你想要杀死的人</h4>
             <h4 ng-show="back&&gameStart">投票选择你认为是杀手的人</h4>

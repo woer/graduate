@@ -180,6 +180,7 @@ overflow: auto;
 }
 .textShow{
     font-size: 35px;
+    font-weight: bolder;
     text-align: center;
     z-index: 999;
     position: absolute;

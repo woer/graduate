@@ -97,11 +97,8 @@ myController.controller('roomListCtrl',['$rootScope','$scope','$location','roomL
 
     pomelo.on("onChoose",function(data){
         roomListService.roomlist=$scope.roomlist=data.roomList;
-
-        console.log("onChoose"+roomListService.roomlist)
-
+       console.log("onChoose"+roomListService.roomlist)
         $scope.$apply();
-
     })
 
 
@@ -120,7 +117,6 @@ myController.controller('userListCtrl',['$timeout','$rootScope','$scope','$locat
     $scope.text='天黑了，杀手出来杀人吧'
     $scope.textShow=false;
     $scope.back=true;
-    $scope.roomlist=null;
     $scope.myaction="";
     $scope.priChannel=false;
     $scope.remain='';
@@ -132,10 +128,10 @@ myController.controller('userListCtrl',['$timeout','$rootScope','$scope','$locat
     $scope.username=roomListService.username;
     $scope.users=roomListService.roomlist[rid].user;
     $scope.roomowner=roomListService.roomlist[rid].roomowner;
-    $scope.$on('change', function( event ) {
-       $scope.roomlist = roomListService.roomlist;
-        $scope.$apply();
-    });
+//    $scope.$on('change', function( event ) {
+//       $scope.roomlist = roomListService.roomlist;
+//        $scope.$apply();
+//    });
     pomelo.on("onChoose",function(data){
         roomListService.roomlist=$scope.roomlist=data.roomList;
         console.dir(roomListService.roomlist)
@@ -249,8 +245,8 @@ myController.controller('userListCtrl',['$timeout','$rootScope','$scope','$locat
         if(data.gameover){
             gameover(data);
             return;
-        }
 
+        }
         $scope.policeMessage=data.message;
         console.log(data.message);
         $scope.remain=data.remain;
@@ -276,6 +272,21 @@ myController.controller('userListCtrl',['$timeout','$rootScope','$scope','$locat
 
     })
 
+    $scope.return=function(){
+        var route = "chat.chatHandler.doReturn";
+        roomListService.roomRequest(route,{
+            rid:rid,
+            name:$scope.username
+        },function(data){
+            $location.path('/changeRoom');
+            roomListService.roomlist=data.roomlist;
+            $rootScope.$broadcast('change');
+            $scope.$apply();
+        })
+
+
+    }
+
     function gameover(data){
 
         $scope.users=data.user;
@@ -290,14 +301,21 @@ myController.controller('userListCtrl',['$timeout','$rootScope','$scope','$locat
        roomListService.lastchoose="";
         roomListService.message=null;
         roomListService.myalive=true
-        ;roomListService.lastworded=false;
+        roomListService.lastworded=false;
 
-
-
-
+        $scope.textShow=true;
+        $scope.text='游戏结束：'+data.win+"赢了";
+        $timeout(function(){
+            $scope.textShow=false;
+        },5000);
 
         $scope.$apply();
     }
+pomelo.on('doReturn',function(data){
+    $scope.users=data.roomlist.user;
+    $scope.roomowner=data.roomlist.roomowner
+    $scope.$apply();
+})
 
     pomelo.on("doBlock",function(data){
         if(data.gameover){
@@ -353,6 +371,7 @@ pomelo.on("lastword",function(data){
             roomListService.myposition=i;
         }
     }
+        $scope.text='天黑了，杀手出来杀人吧';
         $scope.textShow=true;
         $timeout(function(){
             $scope.textShow=false;

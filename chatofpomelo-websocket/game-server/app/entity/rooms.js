@@ -14,15 +14,15 @@ exports.gameover=function(id){
     console.log(roomlist[id].remain)
 if(roomlist[id].remain[0]==0){
     resetRoom(id)
-    return true
+    return '杀手'
 }
     if(roomlist[id].remain[1]==0){
         resetRoom(id)
-        return true
+        return '警察'
     }
     if(roomlist[id].remain[2]==0){
         resetRoom(id)
-        return true
+        return '杀手'
     }
     return false;
 }
@@ -35,7 +35,7 @@ function resetRoom(id){
     roomlist[id].killer=[]
     roomlist[id].remain=[]
     roomlist[id].message=[]
-    roomlist[id].states=[]
+    roomlist[id].states='等待中'
 for(var i=0;i<20;i++){
     user[i].ready=false;
     user[i].alive=false;
@@ -48,7 +48,50 @@ for(var i=0;i<20;i++){
 }
 
 }
+exports.doReturn=function(id,name){
 
+    var user=roomlist[id].user;
+    console.log("删除前的user"+roomlist[id].roomowner)
+    console.dir(user)
+    for(var i=0;i<20;i++)
+    {
+     if(user[i]&&user[i].name==name){
+         var users={
+             name:"",
+             ready:false,
+             position:-1,
+             action:"",
+             alive:false,
+             lastWord:"",
+             byPoliceVote:0,
+             byKillerVote:0,
+             allVote:0,
+             voteWho:""
+         }
+         user[i]=users;
+         roomlist[id].num--;
+         break;
+     }
+
+
+    }
+    if(roomlist[id].roomowner==name){
+        if(roomlist[id].num==0){
+            roomlist[id].roomowner=null;
+        }
+        else{
+            for(var i=0;i<20;i++){
+                if(user[i]&&user[i].name){
+                    roomlist[id].roomowner=user[i].name;
+                    break;
+                }
+             }
+        }
+    }
+    console.log("删除后的user"+roomlist[id].roomowner)
+    console.dir(user)
+return roomlist[id];
+}
 
 exports.getLightTip=function(id){
     var len=roomlist[id].policeChoose.length;
@@ -371,7 +414,7 @@ exports.getUserList=function(id){
 
     var userlist=[];
     for(var i=0;i<20;i++){
-        if(roomlist[id].user[i].name){
+        if(roomlist[id].user[i]){
             userlist.push(roomlist[id].user[i].name);
         }
     }
@@ -415,14 +458,17 @@ exports.addUser=function(id,username){
         voteWho:""
     }
     for(var i=0;i<20;i++){
+
         if(!roomlist[id].user[i].name){
             user.position=i;
             roomlist[id].user[i]=user;
             break;
         }
 
-    }
 
+    }
+    console.log("重新排列后的user")
+console.dir(roomlist[id].user)
     return roomlist;
 }
 
