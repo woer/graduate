@@ -4,7 +4,9 @@
         <img src="{{header}}" style="width: 100px;height: 100px">
         <div  style="margin-top: 15px;font-size: 17px;width: 100px;text-align: center">{{name}}</div>
     </div>
-<div>
+<div class="onlineUser text-center">
+    <h3 class="text-danger">所有在线用户</h3>
+    <div ng-repeat="onUser in onUsers" class="h4 online">{{onUser}}</div>
 </div>
     <div class="roomlist">
     <room ng-repeat='room in roomlist track by $index' id="room.id" roomowner="room.roomowner" number="room.number" states="room.states">

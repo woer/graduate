@@ -8,6 +8,7 @@ var roomlist= [
     { id:6, roomowner: "",policeChoose:[],killerChose:[],police:[],farmer:[],killer:[],remain:[],num:0,messgae:[],states:"等待中",user:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]},
     { id:7, roomowner: "",policeChoose:[],killerChose:[],police:[],farmer:[],killer:[],remain:[],num:0,messgae:[],states:"等待中",user:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]}
 ]
+var Online=[];
 
 exports.gameover=function(id){
     console.log(id);
@@ -51,7 +52,6 @@ for(var i=0;i<20;i++){
 exports.doReturn=function(id,name){
 
     var user=roomlist[id].user;
-    console.log("删除前的user"+roomlist[id].roomowner)
     console.dir(user)
     for(var i=0;i<20;i++)
     {
@@ -88,9 +88,16 @@ exports.doReturn=function(id,name){
              }
         }
     }
-    console.log("删除后的user"+roomlist[id].roomowner)
-    console.dir(user)
 return roomlist[id];
+}
+exports.getOnlineUser=function(name){
+    if(name.length==0){
+        return Online;
+    }
+
+    Online.push(name)
+     return Online;
+
 }
 
 exports.getLightTip=function(id){

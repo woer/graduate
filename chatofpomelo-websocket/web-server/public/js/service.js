@@ -9,6 +9,7 @@ myServices.service( 'roomListService', [ '$rootScope','$location' ,function( $ro
         pomelo:pomelo,
         roomlist:[],
         username:"",
+        onLineUser:[],
         rid:"",
         lastworded:false,
         longRequest: function (route,data,port) {
@@ -20,6 +21,7 @@ myServices.service( 'roomListService', [ '$rootScope','$location' ,function( $ro
 
                 pomelo.request(route, data, function(data) {
                     service.roomlist=data.roomList;
+
                     $rootScope.$broadcast('change');
                     $location.path("/index")
                     $rootScope.$apply();

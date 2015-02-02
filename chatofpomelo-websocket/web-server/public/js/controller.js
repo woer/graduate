@@ -43,6 +43,7 @@ myController.controller('registerCtrl',['$rootScope','$scope','$location','roomL
                   var route = "connector.entryHandler.enter";
                   pomelo.request(route, {rid:"room",username:username}, function (data) {
                      roomListService.roomlist=data.roomList;
+                      roomListService.onLineUser=data.onLineuser;
                       roomListService.username=username;
                       $location.path('/changeRoom');
                       $rootScope.$apply();
@@ -92,12 +93,21 @@ myController.controller('roomListCtrl',['$rootScope','$scope','$location','roomL
     $rootScope.roomlist=roomListService.username;
     $scope.$on('change', function( event ) {
         $scope.roomlist = roomListService.roomlist;
+        $scope.onUsers=roomListService.onLineUser;
         $scope.$apply();
     });
+    pomelo.on('onAdd',function(data){
+
+        $scope.onUsers=data.onLineuser;
+        $scope.$apply();
+    })
+
+
+    $scope.onUsers=roomListService.onLineUser;
 
     pomelo.on("onChoose",function(data){
+        console.dir(data.roomList)
         roomListService.roomlist=$scope.roomlist=data.roomList;
-       console.log("onChoose"+roomListService.roomlist)
         $scope.$apply();
     })
 
@@ -280,6 +290,7 @@ myController.controller('userListCtrl',['$timeout','$rootScope','$scope','$locat
         },function(data){
             $location.path('/changeRoom');
             roomListService.roomlist=data.roomlist;
+            roomListService.onLineUser=data.onLineUser;
             $rootScope.$broadcast('change');
             $scope.$apply();
         })
@@ -313,7 +324,8 @@ myController.controller('userListCtrl',['$timeout','$rootScope','$scope','$locat
     }
 pomelo.on('doReturn',function(data){
     $scope.users=data.roomlist.user;
-    $scope.roomowner=data.roomlist.roomowner
+    $scope.roomowner=data.roomlist.roomowner;
+
     $scope.$apply();
 })
 

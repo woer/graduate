@@ -245,6 +245,7 @@ handler.doReturn=function(msg, session, next){
     var channel = channelService.getChannel('room', false);
     var param = {
         roomlist: roomlist
+
     };
     var userlist=roomList.getUserList(msg.rid);
     for(var i=0;i<userlist.length;i++){
@@ -255,7 +256,8 @@ handler.doReturn=function(msg, session, next){
         }]);
     }
     next(null,{
-        roomlist:roomList.getRoomList()
+        roomlist:roomList.getRoomList(),
+        onLineUser:roomList.getOnlineUser("")
     });
 
 

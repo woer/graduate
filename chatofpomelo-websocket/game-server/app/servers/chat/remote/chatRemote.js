@@ -14,10 +14,10 @@ ChatRemote.prototype.add = function(uid, sid, rid, flag, cb) {
 	var username = uid.split('*')[0];
     var myRoomList=null;
     myRoomList=roomList.getRoomList();
+    var onLineuser=roomList.getOnlineUser(username);
 	var param = {
 		route: 'onAdd',
-        username: username,
-        rid:rid
+        onLineuser:onLineuser
 	};
  channel.pushMessage(param);
    if( !! channel) {
@@ -25,7 +25,7 @@ ChatRemote.prototype.add = function(uid, sid, rid, flag, cb) {
     }
 
 
-	cb(myRoomList);
+	cb(myRoomList,onLineuser);
 };
 
 

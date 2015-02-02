@@ -85,7 +85,7 @@ margin-top: 10px;
     width: 80%;
     height: 550px;
     margin: 0 auto;
-    background-color: #ffffff;
+    background-color: #fff;
     margin-top: 30px;
 }
 .gamedesk{
@@ -218,8 +218,18 @@ overflow: auto;
     float: left;
 }
 
-
-
+.onlineUser{
+    width: 200px;
+    height: 300px;
+  border: solid 2px;
+    float: left;
+    margin-top: 200px;
+    margin-left: -200px;
+    overflow-y: scroll;
+}
+.online{
+    margin: 10px;
+}
 
 
 
